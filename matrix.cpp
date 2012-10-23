@@ -6,55 +6,55 @@ matrix::matrix(std::string sequence1, std::string sequence2, substitution_matrix
 	rows = sequence1.length() + 1;
 	cols = sequence2.length() + 1;
 
-	scoreTable = new cell*[rows];
+	cells = new cell*[rows];
 	for (int i = 0; i < rows; i++) {
-		scoreTable[i] = new cell[cols];
+		cells[i] = new cell[cols];
 		for (int j = 0; j < cols; j++) {
-			scoreTable[i][j] = cell(i,j);
+			cells[i][j] = cell(i,j);
 		}
 	}
 }
 
 void matrix::init() {
-	initializeScores();
-	initializePointers();
+	initialize_scores();
+	initialize_pointers();
 }
 
 matrix::~matrix() {
 	for (int i = 0; i < rows; i++) {
-		delete scoreTable[i];
+		delete cells[i];
 	}
-	delete scoreTable;
+	delete cells;
 }
 
-void matrix::initializeScores() {
+void matrix::initialize_scores() {
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
-			scoreTable[i][j].score = getInitialScore(i, j);
+			cells[i][j].score = get_initial_score(i, j);
 		}
 	}
 }
 
-void matrix::initializePointers() {
+void matrix::initialize_pointers() {
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
-			scoreTable[i][j].previous = getInitialPointer(i, j);
+			cells[i][j].previous = get_initial_pointer(i, j);
 		}
 	}
 }
 
 void matrix::fill_in(int row, int col) {
-	cell* currentCell = &scoreTable[row][col];
-	cell* cellAbove = &scoreTable[row - 1][col];
-	cell* cellToLeft = &scoreTable[row][col - 1];
-	cell* cellAboveLeft = &scoreTable[row - 1][col - 1];
+	cell* currentCell = &cells[row][col];
+	cell* cellAbove = &cells[row - 1][col];
+	cell* cellToLeft = &cells[row][col - 1];
+	cell* cellAboveLeft = &cells[row - 1][col - 1];
 	fill_in_cell(currentCell, cellAbove, cellToLeft, cellAboveLeft);
 }
 
 void matrix::print() {
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
-			std::cout << scoreTable[i][j].score << '\t';
+			std::cout << cells[i][j].score << '\t';
 		}
 		std::cout << std::endl;
 	}

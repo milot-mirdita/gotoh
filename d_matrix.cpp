@@ -5,16 +5,16 @@ void d_matrix::set_a_matrix(matrix* a) {
 	a_matrix = a;
 }
 
-float d_matrix::getInitialScore(int row, int col) {
+float d_matrix::get_initial_score(int row, int col) {
 	if(col == 0)
 		return -FLT_MAX;
 	
 	return 0;
 }
 
-cell* d_matrix::getInitialPointer(int row, int col) {
+cell* d_matrix::get_initial_pointer(int row, int col) {
 	if (col == 0 && row != 0) {
-		return &scoreTable[row - 1][col];
+		return &cells[row - 1][col];
 	} else {
 		return (cell*) 0;
 	}
@@ -23,7 +23,7 @@ cell* d_matrix::getInitialPointer(int row, int col) {
 void d_matrix::fill_in_cell(cell* current, cell* above, cell* left,
 	cell* above_left) {
 	float d_score = left->score + gap_extend;
-	cell a_cell = a_matrix->scoreTable[current->row][current->col - 1];
+	cell a_cell = a_matrix->cells[current->row][current->col - 1];
 	float a_score = a_cell.score + gap_open + gap_extend;
 
 	if (a_score >= d_score) {

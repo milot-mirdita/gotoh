@@ -4,7 +4,7 @@ float a_matrix::gap_cost(int k) {
 	return this->gap_open + this->gap_extend * k;
 }
 
-float a_matrix::getInitialScore(int row, int col) {
+float a_matrix::get_initial_score(int row, int col) {
 	if(row == 0 && col == 0)
 		return 0;
 	if(row == 0 && col  > 0)
@@ -16,11 +16,11 @@ float a_matrix::getInitialScore(int row, int col) {
 }
 
 
-cell* a_matrix::getInitialPointer(int row, int col) {
+cell* a_matrix::get_initial_pointer(int row, int col) {
 	if (row == 0 && col != 0) {
-		return &scoreTable[row][col - 1];
+		return &cells[row][col - 1];
 	} else if (col == 0 && row != 0) {
-		return &scoreTable[row - 1][col];
+		return &cells[row - 1][col];
 	} else {
 		return (cell*) 0;
 	}
@@ -28,8 +28,8 @@ cell* a_matrix::getInitialPointer(int row, int col) {
 
 void a_matrix::fill_in_cell(cell* current, cell* above, cell* left,
 	cell* above_left) {
-	float d_score = d_matrix->scoreTable[current->row][current->col].score;
-	float i_score = i_matrix->scoreTable[current->row][current->col].score;
+	float d_score = d_matrix->cells[current->row][current->col].score;
+	float i_score = i_matrix->cells[current->row][current->col].score;
 	float substitution_score = substitution->get_score(sequence1.at(current->row - 1), sequence2.at(current->col - 1));
 	float a_score = above_left->score + substitution_score;
 
@@ -39,7 +39,7 @@ void a_matrix::fill_in_cell(cell* current, cell* above, cell* left,
 			current->previous = above_left;
 		} else {
 			current->score = d_score;
-			current->previous = &d_matrix->scoreTable[current->row][current->col];
+			current->previous = &d_matrix->cells[current->row][current->col];
 		}
 	} else {
 		if (a_score >= i_score) {
@@ -47,7 +47,7 @@ void a_matrix::fill_in_cell(cell* current, cell* above, cell* left,
 			current->previous = above_left;
 		} else {
 			current->score = i_score;
-			current->previous = &i_matrix->scoreTable[current->row][current->col];
+			current->previous = &i_matrix->cells[current->row][current->col];
 		}
 	}
 }

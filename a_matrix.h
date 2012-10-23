@@ -18,8 +18,8 @@ public:
 protected:
 	float gap_cost(int k);
 
-	virtual float getInitialScore(int row, int col);
-	virtual cell* getInitialPointer(int row, int col);
+	virtual float get_initial_score(int row, int col);
+	virtual cell* get_initial_pointer(int row, int col);
 	virtual void fill_in_cell(cell* current, cell* above, cell* left, cell* above_left);
 };
 

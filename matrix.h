@@ -11,6 +11,9 @@ public:
 	void init(void);
 
 	void fill_in(int row, int col);
+
+	virtual std::string get_traceback() = 0;
+
 	void print(void);
 
 	int rows;
@@ -21,15 +24,18 @@ public:
 	std::string sequence1;
 	std::string sequence2;
 
-	cell** scoreTable;	
+	cell** cells;	
 
 protected:
-	void initializeScores(void);
-	void initializePointers(void);
+	void initialize_scores(void);
+	void initialize_pointers(void);
 
-	virtual float getInitialScore(int row, int col) = 0;
-	virtual cell* getInitialPointer(int row, int col) = 0;
+	virtual float get_initial_score(int row, int col) = 0;
+	virtual cell* get_initial_pointer(int row, int col) = 0;
 	virtual void fill_in_cell(cell* current, cell* above, cell* left, cell* above_left) = 0;
+
+	virtual bool is_traceback_done(cell* current) = 0;
+	virtual cell* get_traceback_start() = 0;
 
 	substitution_matrix* substitution;
 };
