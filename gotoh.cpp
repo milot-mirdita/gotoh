@@ -6,9 +6,9 @@
 gotoh::gotoh(std::string sequence1, std::string sequence2) : sequence1(sequence1), sequence2(sequence2)
 {
 	substitution_matrix matrix("C:\\Users\\Milot\\Documents\\Visual Studio 2010\\Projects\\gotoh\\Debug\\matrices\\dayhoff.mat");
-	auto dm = d_matrix(sequence1, sequence2, &matrix, -12, -1);
-	auto im = i_matrix(sequence1, sequence2, &matrix, -12, -1);
-	auto am = a_matrix(sequence1, sequence2, &matrix, -12, -1, &dm, &im);
+	d_matrix dm(sequence1, sequence2, &matrix, -10, -2);
+	i_matrix im(sequence1, sequence2, &matrix, -10, -2);
+	a_matrix am(sequence1, sequence2, &matrix, -10, -2, &dm, &im);
 
 	dm.init();
 	im.init();
@@ -19,11 +19,20 @@ gotoh::gotoh(std::string sequence1, std::string sequence2) : sequence1(sequence1
 
 	for(int i = 0; i < am.rows; i++) {
 		for(int j = 0; j < am.cols; j++) {
-			dm.fill_in(i, j);
-			im.fill_in(i, j);
-			am.fill_in(i, j);
+			if(j != 0)
+				dm.fill_in(i, j);
+			if(i != 0)
+				im.fill_in(i, j);
+			if(i != 0 && j != 0)
+				am.fill_in(i, j);
 		}
 	}
+
+	dm.print();
+	im.print();
+	am.print();
+
+	system("pause");
 }
 
 

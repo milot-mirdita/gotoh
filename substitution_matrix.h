@@ -6,8 +6,10 @@ class substitution_matrix
 {
 public:
 	substitution_matrix(std::string file);
-	float get_score(char residue1, char residue2);
 	~substitution_matrix(void);
+
+	float get_score(char residue1, char residue2);
+	void print(void);
 
 	int rows;
 	int cols;
@@ -22,6 +24,6 @@ private:
 	void parse_index_row(std::string index);
 	void parse_index_col(std::string index);
 
-	void normalize();
+	void normalize(void);
 };
 

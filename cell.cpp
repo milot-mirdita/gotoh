@@ -1,10 +1,5 @@
 #include "cell.h"
 
-cell::cell(int row, int col) : row(row), col(col), previous((cell*) 0) {
-}
-
-cell::~cell() {
-}
 
 /*
 

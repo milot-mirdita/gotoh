@@ -122,3 +122,13 @@ substitution_matrix::~substitution_matrix(void) {
 	}
 	delete scores;
 }
+
+void substitution_matrix::print() {
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < cols; j++) {
+			std::cout << scores[i][j] << '\t';
+		}
+		std::cout << std::endl;
+	}
+	std::cout << std::endl;	 
+}

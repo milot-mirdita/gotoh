@@ -1,4 +1,5 @@
 #include "matrix.h"
+#include <iostream>
 
 matrix::matrix(std::string sequence1, std::string sequence2, substitution_matrix* substitution, float gap_open, float gap_extend) 
 	: sequence1(sequence1), sequence2(sequence2), gap_open(gap_open), gap_extend(gap_extend), substitution(substitution) {
@@ -8,9 +9,9 @@ matrix::matrix(std::string sequence1, std::string sequence2, substitution_matrix
 	scoreTable = new cell*[rows];
 	for (int i = 0; i < rows; i++) {
 		scoreTable[i] = new cell[cols];
-		//for (int j = 0; j < cols; j++) {
-		//	scoreTable[i][j] = new cell(i, j);
-		//}
+		for (int j = 0; j < cols; j++) {
+			scoreTable[i][j] = cell(i,j);
+		}
 	}
 }
 
@@ -21,12 +22,9 @@ void matrix::init() {
 
 matrix::~matrix() {
 	for (int i = 0; i < rows; i++) {
-		//for (int j = 0; j < cols; j++) {
-		//	delete scoreTable[i][j];
-		//}
-		delete[] scoreTable[i];
+		delete scoreTable[i];
 	}
-	delete this->scoreTable;
+	delete scoreTable;
 }
 
 void matrix::initializeScores() {
@@ -51,4 +49,14 @@ void matrix::fill_in(int row, int col) {
 	cell* cellToLeft = &scoreTable[row][col - 1];
 	cell* cellAboveLeft = &scoreTable[row - 1][col - 1];
 	fill_in_cell(currentCell, cellAbove, cellToLeft, cellAboveLeft);
+}
+
+void matrix::print() {
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < cols; j++) {
+			std::cout << scoreTable[i][j].score << '\t';
+		}
+		std::cout << std::endl;
+	}
+	std::cout << std::endl;	 
 }

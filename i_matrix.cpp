@@ -7,7 +7,7 @@ void i_matrix::set_a_matrix(matrix* a) {
 
 float i_matrix::getInitialScore(int row, int col) {
 	if(row == 0)
-		return FLT_MIN;
+		return -FLT_MAX;
 	
 	return 0;
 }
@@ -22,15 +22,15 @@ cell* i_matrix::getInitialPointer(int row, int col) {
 
 void i_matrix::fill_in_cell(cell* current, cell* above, cell* left,
 	cell* above_left) {
-	float d_score = above->score + gap_extend;
-	float substitution_score = 0;
-	float a_score = a_matrix->scoreTable[current->row - 1][current->col].score + gap_open + gap_extend;
+	float i_score = above->score + gap_extend;
+	cell a_cell = a_matrix->scoreTable[current->row - 1][current->col];
+	float a_score = a_cell.score + gap_open + gap_extend;
 
-	if (a_score >= d_score) {
+	if (a_score >= i_score) {
 		current->score = a_score;
-		current->previous = &a_matrix->scoreTable[current->row - 1][current->col];
+		current->previous = &a_cell;
 	} else {
-		current->score = d_score;
+		current->score = i_score;
 		current->previous = above;
 	}
 }

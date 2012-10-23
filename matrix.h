@@ -11,6 +11,7 @@ public:
 	void init(void);
 
 	void fill_in(int row, int col);
+	void print(void);
 
 	int rows;
 	int cols;

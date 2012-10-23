@@ -30,7 +30,7 @@ void a_matrix::fill_in_cell(cell* current, cell* above, cell* left,
 	cell* above_left) {
 	float d_score = d_matrix->scoreTable[current->row][current->col].score;
 	float i_score = i_matrix->scoreTable[current->row][current->col].score;
-	float substitution_score = 0;
+	float substitution_score = substitution->get_score(sequence1.at(current->row - 1), sequence2.at(current->col - 1));
 	float a_score = above_left->score + substitution_score;
 
 	if (d_score >= i_score) {
