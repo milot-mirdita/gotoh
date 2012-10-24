@@ -5,15 +5,10 @@
 
 class a_matrix : public matrix
 {
-private:
-	matrix* d_matrix;
-	matrix* i_matrix;
-	alignment_type type;
-
 public:
-	a_matrix(std::string sequence1, std::string sequence2, substitution_matrix* substitution, alignment_type type,
+	a_matrix(std::string sequence1, std::string sequence2, substitution_matrix* substitution,
 		float gap_open, float gap_extend, matrix* d_matrix, matrix* i_matrix) 
-		: matrix(sequence1, sequence2, substitution, gap_open, gap_extend), d_matrix(d_matrix), i_matrix(i_matrix), type(type) {};
+		: matrix(sequence1, sequence2, substitution, gap_open, gap_extend), d_matrix(d_matrix), i_matrix(i_matrix) {};
 
 	virtual std::pair<std::string, std::string> get_traceback();
 
@@ -31,10 +26,7 @@ protected:
 	virtual bool is_traceback_done(cell* current);
 	virtual cell* get_traceback_start();
 
-	cell* max_local;
-	cell* max_freeshift;
-
-	float max_local_score;
-	float max_freeshift_score;
+	matrix* d_matrix;
+	matrix* i_matrix;
 };
 
