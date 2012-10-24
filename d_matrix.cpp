@@ -1,6 +1,10 @@
 #include <cfloat>
 #include "d_matrix.h"
 
+char d_matrix::get_type() {
+	return 'd';
+}
+
 void d_matrix::set_a_matrix(matrix* a) {
 	a_matrix = a;
 }
@@ -23,12 +27,11 @@ cell* d_matrix::get_initial_pointer(int row, int col) {
 void d_matrix::fill_in_cell(cell* current, cell* above, cell* left,
 	cell* above_left) {
 	float d_score = left->score + gap_extend;
-	cell a_cell = a_matrix->cells[current->row][current->col - 1];
-	float a_score = a_cell.score + gap_open + gap_extend;
+	float a_score = a_matrix->cells[current->row][current->col - 1].score + gap_open + gap_extend;
 
 	if (a_score >= d_score) {
 		current->score = a_score;
-		current->previous = &a_cell;
+		current->previous = &a_matrix->cells[current->row][current->col - 1];
 	} else {
 		current->score = d_score;
 		current->previous = left;

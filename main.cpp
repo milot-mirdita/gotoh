@@ -3,6 +3,6 @@
 
 int main(int argc, char* argv[])
 {
-	gotoh run("WTHA", "WTHGQA");
+	gotoh run("WTHGVSLW", "WTHGQACVELSIW");
 	return 0;
 }

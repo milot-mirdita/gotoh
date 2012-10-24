@@ -19,6 +19,12 @@
     <Filter Include="Header Files\gotoh">
       <UniqueIdentifier>{5c5b0643-73df-45e6-875c-b764f29e13f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\parsers">
+      <UniqueIdentifier>{e80af606-7483-49a7-81f3-56988117915f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\parsers">
+      <UniqueIdentifier>{cbc53ea4-7138-4d12-9f8e-c53f67410287}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -42,8 +48,17 @@
     <ClInclude Include="d_matrix.h">
       <Filter>Header Files\gotoh</Filter>
     </ClInclude>
-    <ClInclude Include="substitution_matrix.h">
+    <ClInclude Include="alignment_type.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="substitution_matrix.h">
+      <Filter>Header Files\parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="sequence_library.h">
+      <Filter>Header Files\parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="pairs_library.h">
+      <Filter>Header Files\parsers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -68,8 +83,14 @@
     <ClCompile Include="d_matrix.cpp">
       <Filter>Source Files\gotoh</Filter>
     </ClCompile>
+    <ClCompile Include="sequence_library.cpp">
+      <Filter>Source Files\parsers</Filter>
+    </ClCompile>
     <ClCompile Include="substitution_matrix.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="pairs_library.cpp">
+      <Filter>Source Files\parsers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

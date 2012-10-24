@@ -15,16 +15,25 @@ matrix::matrix(std::string sequence1, std::string sequence2, substitution_matrix
 	}
 }
 
-void matrix::init() {
-	initialize_scores();
-	initialize_pointers();
-}
-
 matrix::~matrix() {
 	for (int i = 0; i < rows; i++) {
 		delete cells[i];
 	}
 	delete cells;
+}
+
+void matrix::init() {
+	initialize_types();
+	initialize_scores();
+	initialize_pointers();
+}
+
+void matrix::initialize_types() {
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < cols; j++) {
+			cells[i][j].type = get_type();
+		}
+	}
 }
 
 void matrix::initialize_scores() {

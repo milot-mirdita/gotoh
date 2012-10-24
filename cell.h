@@ -9,4 +9,6 @@ public:
 	float score;
 	int row;
 	int col;
+	
+	char type;
 };

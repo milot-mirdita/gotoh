@@ -78,12 +78,15 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="alignment_type.h" />
     <ClInclude Include="a_matrix.h" />
     <ClInclude Include="cell.h" />
     <ClInclude Include="d_matrix.h" />
     <ClInclude Include="gotoh.h" />
     <ClInclude Include="i_matrix.h" />
     <ClInclude Include="matrix.h" />
+    <ClInclude Include="pairs_library.h" />
+    <ClInclude Include="sequence_library.h" />
     <ClInclude Include="substitution_matrix.h" />
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +97,8 @@
     <ClCompile Include="i_matrix.cpp" />
     <ClCompile Include="matrix.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="pairs_library.cpp" />
+    <ClCompile Include="sequence_library.cpp" />
     <ClCompile Include="substitution_matrix.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
