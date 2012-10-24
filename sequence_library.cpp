@@ -1,6 +1,5 @@
 #include "sequence_library.h"
 #include <fstream>
-#include <boost/foreach.hpp>
 #include <boost/tokenizer.hpp>
 
 using namespace std;
@@ -14,7 +13,7 @@ sequence_library::sequence_library(std::string file)
 		boost::char_separator<char> sep(":");
 		boost::tokenizer<boost::char_separator<char>> tokens(line, sep);
 		auto iterator = tokens.begin();
-		sequences.insert(iterator++, iterator);
+		sequences.insert(std::pair<std::string, std::string>(*iterator++, *iterator));
 	}
 }
 

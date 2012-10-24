@@ -63,7 +63,7 @@ std::pair<std::string, std::string> a_matrix::get_traceback() {
 	std::string alignment2;
 
 	cell* current = get_traceback_start();
-	while(is_traceback_done(current)) {
+	while(!is_traceback_done(current)) {
 		// match
 		if (current->row - current->previous->row == 1 && current->col - current->previous->col == 1) {
 			alignment1.push_back(sequence2.at(current->col - 1));
@@ -72,7 +72,7 @@ std::pair<std::string, std::string> a_matrix::get_traceback() {
 		} else if (current->row - current->previous->row == 1 && current->col - current->previous->col == 0) {
 			cell* afine = current;
 			int k = 0;
-			while(afine && afine->type != 'a') {
+			while(afine/* && afine->type != 'a'*/) {
 				alignment2.push_back(sequence1.at(current->row - 1));
 				alignment1.push_back('-');
 				afine = afine->previous;
@@ -82,7 +82,7 @@ std::pair<std::string, std::string> a_matrix::get_traceback() {
 		} else if (current->row - current->previous->row == 0 && current->col - current->previous->col == 1) {
 			cell* afine = current;
 			int k = 0;
-			while(afine && afine->type != 'a') {
+			while(afine/* && afine->type != 'a'*/) {
 				alignment1.push_back(sequence2.at(current->col - 1 - k));
 				alignment2.push_back('-');
 				afine = afine->previous;
@@ -106,7 +106,7 @@ std::pair<std::string, std::string> a_matrix::get_traceback() {
 }
 
 bool a_matrix::is_traceback_done(cell* current) {
-	return !!current->previous;	
+	return current->previous == (cell*)0;	
 }
 
 cell* a_matrix::get_traceback_start() {

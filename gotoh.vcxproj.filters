@@ -60,6 +60,12 @@
     <ClInclude Include="pairs_library.h">
       <Filter>Header Files\parsers</Filter>
     </ClInclude>
+    <ClInclude Include="a_matrix_local.h">
+      <Filter>Header Files\gotoh</Filter>
+    </ClInclude>
+    <ClInclude Include="a_matrix_freeshift.h">
+      <Filter>Header Files\gotoh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -91,6 +97,12 @@
     </ClCompile>
     <ClCompile Include="pairs_library.cpp">
       <Filter>Source Files\parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="a_matrix_local.cpp">
+      <Filter>Source Files\gotoh</Filter>
+    </ClCompile>
+    <ClCompile Include="a_matrix_freeshift.cpp">
+      <Filter>Source Files\gotoh</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

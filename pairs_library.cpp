@@ -1,6 +1,5 @@
 #include "pairs_library.h"
 #include <fstream>
-#include <boost/foreach.hpp>
 #include <boost/tokenizer.hpp>
 
 using namespace std;
@@ -14,6 +13,6 @@ pairs_library::pairs_library(std::string file)
 		boost::char_separator<char> sep(" ");
 		boost::tokenizer<boost::char_separator<char>> tokens(line, sep);
 		auto iterator = tokens.begin();
-		pairs.insert(iterator++, iterator);
+		pairs.insert(std::pair<std::string, std::string>(*iterator++, *iterator));
 	}
 }

@@ -62,10 +62,14 @@
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>lib/</AdditionalIncludeDirectories>
+      <OmitFramePointers>true</OmitFramePointers>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -80,6 +84,8 @@
   <ItemGroup>
     <ClInclude Include="alignment_type.h" />
     <ClInclude Include="a_matrix.h" />
+    <ClInclude Include="a_matrix_freeshift.h" />
+    <ClInclude Include="a_matrix_local.h" />
     <ClInclude Include="cell.h" />
     <ClInclude Include="d_matrix.h" />
     <ClInclude Include="gotoh.h" />
@@ -91,6 +97,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="a_matrix.cpp" />
+    <ClCompile Include="a_matrix_freeshift.cpp" />
+    <ClCompile Include="a_matrix_local.cpp" />
     <ClCompile Include="cell.cpp" />
     <ClCompile Include="d_matrix.cpp" />
     <ClCompile Include="gotoh.cpp" />
