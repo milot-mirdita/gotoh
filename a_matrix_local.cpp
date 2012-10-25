@@ -2,6 +2,7 @@
 
 
 void a_matrix_local::fill_in_cell(cell* current, cell* above, cell* left, cell* above_left) {
+	//FIXME: is this right??
 	float d_score = d_matrix->cells[current->row][current->col].score;
 	float i_score = i_matrix->cells[current->row][current->col].score;
 	float substitution_score = substitution->get_score(sequence1.at(current->row - 1), sequence2.at(current->col - 1));

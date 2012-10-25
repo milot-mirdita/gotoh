@@ -8,6 +8,10 @@ using namespace std;
 
 substitution_matrix::substitution_matrix(std::string file)
 {
+	for(int i = 0; i < 256; i++) {
+		row_index[i] = -1;
+		col_index[i] = -1;
+	}
 	rows = 0;
 	cols = 0;
 	int last_col_index = 0;
@@ -96,27 +100,30 @@ void substitution_matrix::normalize() {
 
 void substitution_matrix::parse_index_row(std::string index) {
 	const char* string = index.c_str();	
-	for(int i = 0; i < index.length(); i++) {
-		row_index.insert(pair<char,int>(string[i], i));
+	for(unsigned int i = 0; i < index.length(); i++) {
+		row_index[string[i]] = i;
 	}
 }
 
 void substitution_matrix::parse_index_col(std::string index) {
 	const char* string = index.c_str();	
-	for(int i = 0; i < index.length(); i++) {
-		col_index.insert(pair<char,int>(string[i], i));
+	for(unsigned int i = 0; i < index.length(); i++) {
+		col_index[string[i]] = i;
 	}
 }
 
 float substitution_matrix::get_score(char residue1, char residue2) {
-	int row = row_index.find(residue1)->second;
-	int col = col_index.find(residue2)->second;
+	int row = row_index[residue1];
+	int col = col_index[residue2];
 
 	return scores[row][col];
 }
 
 
-substitution_matrix::~substitution_matrix(void) {		
+substitution_matrix::~substitution_matrix(void) {	
+	delete[] row_index;
+	delete[] col_index;
+
 	for(int i = 0; i < rows; i++) {
 		delete scores[i];
 	}

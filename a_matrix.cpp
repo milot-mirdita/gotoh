@@ -45,7 +45,7 @@ void a_matrix::fill_in_cell(cell* current, cell* above, cell* left,
 			current->previous = above_left;
 		} else {
 			current->score = d_score;
-			current->previous = &d_matrix->cells[current->row][current->col];
+			current->previous = left;
 		}
 	} else {
 		if (a_score >= i_score) {
@@ -53,7 +53,7 @@ void a_matrix::fill_in_cell(cell* current, cell* above, cell* left,
 			current->previous = above_left;
 		} else {
 			current->score = i_score;
-			current->previous = &i_matrix->cells[current->row][current->col];
+			current->previous = above;
 		}
 	}
 }
@@ -64,34 +64,19 @@ std::pair<std::string, std::string> a_matrix::get_traceback() {
 
 	cell* current = get_traceback_start();
 	while(!is_traceback_done(current)) {
-		// match
-		if (current->row - current->previous->row == 1 && current->col - current->previous->col == 1) {
+		int delta_row = current->row - current->previous->row;
+		int delta_col = current->col - current->previous->col;
+		if (delta_row == 1 && delta_col == 1) {
 			alignment1.push_back(sequence2.at(current->col - 1));
 			alignment2.push_back(sequence1.at(current->row - 1));
-			current = current->previous;
-		} else if (current->row - current->previous->row == 1 && current->col - current->previous->col == 0) {
-			cell* afine = current;
-			int k = 0;
-			while(afine/* && afine->type != 'a'*/) {
-				alignment2.push_back(sequence1.at(current->row - 1));
-				alignment1.push_back('-');
-				afine = afine->previous;
-				k++;
-			}
-			current = afine;
-		} else if (current->row - current->previous->row == 0 && current->col - current->previous->col == 1) {
-			cell* afine = current;
-			int k = 0;
-			while(afine/* && afine->type != 'a'*/) {
-				alignment1.push_back(sequence2.at(current->col - 1 - k));
-				alignment2.push_back('-');
-				afine = afine->previous;
-				k++;
-			}
-			current = afine;
-		} else {
-			current = current->previous;
+		} else if (delta_row == 1 && delta_col == 0) {
+			alignment2.push_back(sequence1.at(current->row - 1));
+			alignment1.push_back('-');
+		} else if (delta_row == 0 && delta_col == 1) {
+			alignment1.push_back(sequence2.at(current->col - 1));
+			alignment2.push_back('-');
 		}
+		current = current->previous;
 	}
 
 	std::string reverse_alignment1(alignment1);
@@ -99,8 +84,6 @@ std::pair<std::string, std::string> a_matrix::get_traceback() {
 
 	std::string reverse_alignment2(alignment2);
 	std::reverse(reverse_alignment2.begin(), reverse_alignment2.end());
-
-
 
 	return std::pair<std::string, std::string>(reverse_alignment1, reverse_alignment2);
 }

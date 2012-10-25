@@ -71,9 +71,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cell.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="matrix.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

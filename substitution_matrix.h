@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include <map>
 
 class substitution_matrix
 {
@@ -14,8 +13,9 @@ public:
 	int rows;
 	int cols;
 
-	std::map<char, int> row_index;
-	std::map<char, int> col_index;
+	char row_index[256];
+	char col_index[256];
+
 private:
 	int current_row_index;
 
