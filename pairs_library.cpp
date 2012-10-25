@@ -13,6 +13,6 @@ pairs_library::pairs_library(std::string file)
 		boost::char_separator<char> sep(" ");
 		boost::tokenizer<boost::char_separator<char>> tokens(line, sep);
 		auto iterator = tokens.begin();
-		pairs.insert(std::pair<std::string, std::string>(*iterator++, *iterator));
+		pairs.push_back(std::pair<std::string, std::string>(*iterator++, *iterator));
 	}
 }

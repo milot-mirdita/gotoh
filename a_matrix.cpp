@@ -5,10 +5,6 @@ float a_matrix::gap_cost(int k) {
 	return this->gap_open + this->gap_extend * k;
 }
 
-char a_matrix::get_type() {
-	return 'a';
-}
-
 float a_matrix::get_initial_score(int row, int col) {
 	if(row == 0 && col == 0)
 		return 0;
@@ -27,9 +23,9 @@ cell* a_matrix::get_initial_pointer(int row, int col) {
 		return &cells[row][col - 1];
 	} else if (col == 0 && row != 0) {
 		return &cells[row - 1][col];
-	} else {
-		return (cell*) 0;
 	}
+	
+	return 0;
 }
 
 void a_matrix::fill_in_cell(cell* current, cell* above, cell* left,
@@ -89,7 +85,7 @@ std::pair<std::string, std::string> a_matrix::get_traceback() {
 }
 
 bool a_matrix::is_traceback_done(cell* current) {
-	return current->previous == (cell*)0;	
+	return current->previous == 0;	
 }
 
 cell* a_matrix::get_traceback_start() {

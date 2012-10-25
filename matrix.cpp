@@ -10,7 +10,8 @@ matrix::matrix(std::string sequence1, std::string sequence2, substitution_matrix
 	for (int i = 0; i < rows; i++) {
 		cells[i] = new cell[cols];
 		for (int j = 0; j < cols; j++) {
-			cells[i][j] = cell(i,j);
+			cell c = {0, 0.0f, i, j};
+			cells[i][j] = c;
 		}
 	}
 }
@@ -23,17 +24,8 @@ matrix::~matrix() {
 }
 
 void matrix::init() {
-	initialize_types();
 	initialize_scores();
 	initialize_pointers();
-}
-
-void matrix::initialize_types() {
-	for (int i = 0; i < rows; i++) {
-		for (int j = 0; j < cols; j++) {
-			cells[i][j].type = get_type();
-		}
-	}
 }
 
 void matrix::initialize_scores() {

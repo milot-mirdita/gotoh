@@ -10,7 +10,7 @@ void a_matrix_local::fill_in_cell(cell* current, cell* above, cell* left, cell* 
 
 	if(std::max(d_score, std::max(i_score, std::max(a_score, 0.0f))) == 0.0f) {
 		current->score = 0;
-		current->previous = (cell*)0;
+		current->previous = 0;
 		return;
 	}
 
@@ -20,7 +20,7 @@ void a_matrix_local::fill_in_cell(cell* current, cell* above, cell* left, cell* 
 			current->previous = above_left;
 		} else {
 			current->score = d_score;
-			current->previous = &d_matrix->cells[current->row][current->col];
+			current->previous = left;
 		}
 	} else {
 		if (a_score >= i_score) {
@@ -28,7 +28,7 @@ void a_matrix_local::fill_in_cell(cell* current, cell* above, cell* left, cell* 
 			current->previous = above_left;
 		} else {
 			current->score = i_score;
-			current->previous = &i_matrix->cells[current->row][current->col];
+			current->previous = above;
 		}
 	}
 
@@ -39,7 +39,7 @@ void a_matrix_local::fill_in_cell(cell* current, cell* above, cell* left, cell* 
 }
 
 bool a_matrix_local::is_traceback_done(cell* current) {
-	return current->score == 0.0f || current->previous == (cell*)0;
+	return current->score == 0.0f || current->previous == 0;
 }
 
 cell* a_matrix_local::get_traceback_start() {

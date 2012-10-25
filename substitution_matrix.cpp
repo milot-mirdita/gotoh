@@ -121,9 +121,6 @@ float substitution_matrix::get_score(char residue1, char residue2) {
 
 
 substitution_matrix::~substitution_matrix(void) {	
-	delete[] row_index;
-	delete[] col_index;
-
 	for(int i = 0; i < rows; i++) {
 		delete scores[i];
 	}
