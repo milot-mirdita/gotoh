@@ -96,6 +96,7 @@
     <ClInclude Include="pairs_library.h" />
     <ClInclude Include="sequence_library.h" />
     <ClInclude Include="substitution_matrix.h" />
+    <ClInclude Include="util.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="a_matrix.cpp" />
@@ -109,6 +110,7 @@
     <ClCompile Include="pairs_library.cpp" />
     <ClCompile Include="sequence_library.cpp" />
     <ClCompile Include="substitution_matrix.cpp" />
+    <ClCompile Include="util.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

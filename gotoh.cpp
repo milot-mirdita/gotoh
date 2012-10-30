@@ -4,11 +4,11 @@
 #include "i_matrix.h"
 #include "alignment_type.h"
 
-gotoh::gotoh(std::string sequence1, std::string sequence2, substitution_matrix* matrix) : sequence1(sequence1), sequence2(sequence2)
+gotoh::gotoh(std::string sequence1, std::string sequence2,  float gap_open, float gap_extend, substitution_matrix* matrix)
 {	
-	d_matrix dm(sequence1, sequence2, matrix, -10, -2);
-	i_matrix im(sequence1, sequence2, matrix, -10, -2);
-	a_matrix am(sequence1, sequence2, matrix, -10, -2, &dm, &im);
+	d_matrix dm(sequence1, sequence2, matrix, gap_open, gap_extend);
+	i_matrix im(sequence1, sequence2, matrix, gap_open, gap_extend);
+	a_matrix am(sequence1, sequence2, matrix, gap_open, gap_extend, &dm, &im);
 
 	dm.init();
 	im.init();
@@ -33,9 +33,4 @@ gotoh::gotoh(std::string sequence1, std::string sequence2, substitution_matrix* 
 	//am.print();
 
 	std::pair<std::string, std::string> alignment = am.get_traceback();
-}
-
-
-gotoh::~gotoh(void)
-{
 }
