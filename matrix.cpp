@@ -1,15 +1,12 @@
 #include "matrix.h"
 #include <iostream>
 
-matrix::matrix(std::string sequence1, std::string sequence2, substitution_matrix* substitution, float gap_open, float gap_extend) 
-	: sequence1(sequence1), sequence2(sequence2), gap_open(gap_open), gap_extend(gap_extend), substitution(substitution) {
-	rows = sequence1.length() + 1;
-	cols = sequence2.length() + 1;
-
-	cells = new cell*[rows];
-	for (int i = 0; i < rows; i++) {
-		cells[i] = new cell[cols];
-		for (int j = 0; j < cols; j++) {
+matrix::matrix(unsigned int size, substitution_matrix* substitution, float gap_open, float gap_extend) 
+	: sequence1(sequence1), sequence2(sequence2), gap_open(gap_open), gap_extend(gap_extend), substitution(substitution), max_size(size + 1) {
+	cells = new cell*[max_size];
+	for (int i = 0; i < max_size; i++) {
+		cells[i] = new cell[max_size];
+		for (int j = 0; j < max_size; j++) {
 			cell c = {0, 0.0f, i, j};
 			cells[i][j] = c;
 		}
@@ -17,7 +14,7 @@ matrix::matrix(std::string sequence1, std::string sequence2, substitution_matrix
 }
 
 matrix::~matrix() {
-	for (int i = 0; i < rows; i++) {
+	for (int i = 0; i < max_size; i++) {
 		delete cells[i];
 	}
 	delete cells;
@@ -29,19 +26,27 @@ void matrix::init() {
 }
 
 void matrix::initialize_scores() {
-	for (int i = 0; i < rows; i++) {
-		for (int j = 0; j < cols; j++) {
+	for (int i = 0; i < max_size; i++) {
+		for (int j = 0; j < max_size; j++) {
 			cells[i][j].score = get_initial_score(i, j);
 		}
 	}
 }
 
 void matrix::initialize_pointers() {
-	for (int i = 0; i < rows; i++) {
-		for (int j = 0; j < cols; j++) {
+	for (int i = 0; i < max_size; i++) {
+		for (int j = 0; j < max_size; j++) {
 			cells[i][j].previous = get_initial_pointer(i, j);
 		}
 	}
+}
+
+void matrix::set_sequences(std::string sequence1, std::string sequence2) {
+	this->sequence1 = sequence1;
+	this->sequence2 = sequence2;
+
+	rows = sequence1.length() + 1;
+	cols = sequence2.length() + 1;
 }
 
 void matrix::fill_in(int row, int col) {

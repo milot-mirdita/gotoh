@@ -5,6 +5,7 @@
 
 sequence_library::sequence_library(std::string file)
 {
+	max_length = 0;
 	std::ifstream in(file.c_str());
 	std::string line;
 	while(std::getline(in, line)) {

@@ -7,8 +7,8 @@ private:
 	matrix* a_matrix;
 
 public:
-	i_matrix(std::string sequence1, std::string sequence2, substitution_matrix* substitution, float gap_open, float gap_extend) 
-		: matrix(sequence1, sequence2, substitution, gap_open, gap_extend) {};
+	i_matrix(unsigned int size, substitution_matrix* substitution, float gap_open, float gap_extend) 
+		: matrix(size, substitution, gap_open, gap_extend) {};
 
 	void set_a_matrix(matrix* a_matrix);
 	friend class a_matrix;

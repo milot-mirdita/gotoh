@@ -41,16 +41,23 @@ int main(int argc, char* argv[])
  	pairs_library pairs(pairs_libarary_arg.getValue());
  	substitution_matrix matrix(substitution_matrix_arg.getValue());
  
+	gotoh runner(sequences.max_length, gap_open_arg.getValue(), gap_extend_arg.getValue(), &matrix);
  	int counter = 0;
  	for(auto i = pairs.pairs.begin(); i != pairs.pairs.end(); i++) {
  		std::string sequence1 = sequences.get_sequence(i->first);
  		std::string sequence2 = sequences.get_sequence(i->second);
-		gotoh run(sequence1, sequence2, gap_open_arg.getValue(), gap_extend_arg.getValue(), &matrix);
+		runner.run(sequence1, sequence2);
+		
 		if(counter % 100 == 0) {
 			std::cout << ".";
 		}
 		counter++;
 	}
 	
+	
+	//substitution_matrix matrix("C:\\Users\\Milot\\Documents\\Visual Studio 2010\\Projects\\gotoh\\Debug\\matrices\\pam250.mat");
+	//gotoh runner(20, -10, -2, &matrix);
+	//runner.run("WTGHA", "ATHGAAAAQAA");
+	//system("pause");
 	return 0;
 }

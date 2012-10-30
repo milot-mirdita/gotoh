@@ -1,36 +1,46 @@
 #include "gotoh.h"
-#include "a_matrix.h"
-#include "d_matrix.h"
-#include "i_matrix.h"
-#include "alignment_type.h"
 
-gotoh::gotoh(std::string sequence1, std::string sequence2,  float gap_open, float gap_extend, substitution_matrix* matrix)
+gotoh::gotoh(unsigned int size, float gap_open, float gap_extend, substitution_matrix* matrix)
+	: size(size), gap_open(gap_open), gap_extend(gap_extend), matrix(matrix)
 {	
-	d_matrix dm(sequence1, sequence2, matrix, gap_open, gap_extend);
-	i_matrix im(sequence1, sequence2, matrix, gap_open, gap_extend);
-	a_matrix am(sequence1, sequence2, matrix, gap_open, gap_extend, &dm, &im);
+	dm = new d_matrix(size, matrix, gap_open, gap_extend);
+	im = new i_matrix(size, matrix, gap_open, gap_extend);
+	am = new a_matrix(size, matrix, gap_open, gap_extend, dm, im);
 
-	dm.init();
-	im.init();
-	am.init();
+	dm->init();
+	im->init();
+	am->init();
 
-	dm.set_a_matrix(&am);
-	im.set_a_matrix(&am);
+	dm->set_a_matrix(am);
+	im->set_a_matrix(am);
+}
 
-	for(int i = 0; i < am.rows; i++) {
-		for(int j = 0; j < am.cols; j++) {
+gotoh::~gotoh()
+{
+	delete am;
+	delete im;
+	delete dm;
+}
+
+void gotoh::run(std::string sequence1, std::string sequence2) {
+	dm->set_sequences(sequence1, sequence2);
+	im->set_sequences(sequence1, sequence2);
+	am->set_sequences(sequence1, sequence2);
+
+	for(int i = 0; i < am->rows; i++) {
+		for(int j = 0; j < am->cols; j++) {
 			if(j != 0)
-				dm.fill_in(i, j);
+				dm->fill_in(i, j);
 			if(i != 0)
-				im.fill_in(i, j);
+				im->fill_in(i, j);
 			if(i != 0 && j != 0)
-				am.fill_in(i, j);
+				am->fill_in(i, j);
 		}
 	}
 
-	//dm.print();
-	//im.print();
-	//am.print();
+	dm->print();
+	im->print();
+	am->print();
 
-	std::pair<std::string, std::string> alignment = am.get_traceback();
+	std::pair<std::string, std::string> alignment = am->get_traceback();
 }

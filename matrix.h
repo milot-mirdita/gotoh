@@ -5,11 +5,12 @@
 
 class matrix {
 public:
-	matrix(std::string sequence1, std::string sequence2, substitution_matrix* substitution, float gap_open, float gap_extend);
+	matrix(unsigned int size, substitution_matrix* substitution, float gap_open, float gap_extend);
 	~matrix();
 
 	void init(void);
 
+	void set_sequences(std::string sequence1, std::string sequence2);
 	void fill_in(int row, int col);
 
 	virtual std::pair<std::string, std::string> get_traceback() = 0;
@@ -18,6 +19,8 @@ public:
 
 	int rows;
 	int cols;
+
+	unsigned int max_size;
 	float gap_open;
 	float gap_extend;
 
