@@ -13,7 +13,7 @@ sequence_library::sequence_library(std::string file)
 		std::string identifier = myvect.at(0);
 		std::string sequence = myvect.at(1);
 		sequences.insert(std::pair<std::string, std::string>(identifier, sequence));
-		max_length = std::max(sequence.length(), max_length);
+		max_length = std::max((unsigned int) sequence.length(), max_length);
 	}
 }
 
