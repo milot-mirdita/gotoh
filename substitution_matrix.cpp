@@ -101,14 +101,14 @@ void substitution_matrix::normalize() {
 void substitution_matrix::parse_index_row(std::string index) {
 	const char* string = index.c_str();	
 	for(unsigned int i = 0; i < index.length(); i++) {
-		row_index[string[i]] = i;
+		row_index[(unsigned char) string[i]] = i;
 	}
 }
 
 void substitution_matrix::parse_index_col(std::string index) {
 	const char* string = index.c_str();	
 	for(unsigned int i = 0; i < index.length(); i++) {
-		col_index[string[i]] = i;
+		col_index[(unsigned char) string[i]] = i;
 	}
 }
 
