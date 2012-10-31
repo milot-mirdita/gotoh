@@ -3,8 +3,7 @@
 #include "util.h"
 #include <algorithm>
 
-sequence_library::sequence_library(std::string file)
-{
+sequence_library::sequence_library(std::string file) {
 	max_length = 0;
 	std::ifstream in(file.c_str());
 	std::string line;

@@ -3,8 +3,7 @@
 #include "util.h"
 
 
-pairs_library::pairs_library(std::string file)
-{
+pairs_library::pairs_library(std::string file) {
 	std::ifstream in(file);
 	std::string line;
 	while(std::getline(in, line)) {

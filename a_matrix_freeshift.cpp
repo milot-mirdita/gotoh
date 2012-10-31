@@ -1,5 +1,6 @@
 #include "a_matrix_freeshift.h"
 #include "a_matrix.h"
+#include <climits>
 
 int a_matrix_freeshift::get_initial_score(int row, int col) {
 	if(row == 0 && col  > 0) {
@@ -10,15 +11,16 @@ int a_matrix_freeshift::get_initial_score(int row, int col) {
 }
 
 cell* a_matrix_freeshift::get_traceback_start() {
-	return max_freeshift;
-}
+	int max_score = INT_MIN;
+	cell* start = nullptr;
 
-void a_matrix_freeshift::fill_in_cell(cell* current, cell* above, cell* left,
-	cell* above_left) {
-	a_matrix::fill_in_cell(current, above, left, above_left);
-
-	if(current->score > max_freeshift_score && current->col == cols - 1) {
-		max_freeshift_score = current->score;
-		max_freeshift = current;
+	for(int i = 0; i < rows; i++) {
+		cell current = cells[i][cols - 1];
+		if(current.score > max_score) {
+			max_score = current.score;
+			start = &current;
+		}
 	}
+
+	return start;
 }

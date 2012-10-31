@@ -6,13 +6,13 @@ int a_matrix::gap_cost(int k) {
 }
 
 int a_matrix::get_initial_score(int row, int col) {
-	if(row == 0 && col == 0)
+	if(row == 0 && col == 0) {
 		return 0;
-	if(row == 0 && col  > 0) {
+	} else if(row == 0 && col  > 0) {
 		return this->gap_cost(col);
-	}
-	if(row >  0 && col == 0)
+	} else if(row >  0 && col == 0) {
 		return this->gap_cost(row);
+	}
 
 	return 0;
 }
@@ -28,8 +28,7 @@ cell* a_matrix::get_initial_pointer(int row, int col) {
 	return 0;
 }
 
-void a_matrix::fill_in_cell(cell* current, cell* above, cell* left,
-	cell* above_left) {
+void a_matrix::fill_in_cell(cell* current, cell* above, cell* left, cell* above_left) {
 	int d_score = d_matrix->cells[current->row][current->col].score;
 	int i_score = i_matrix->cells[current->row][current->col].score;
 	int substitution_score = substitution->get_score(sequence1.at(current->row - 1), sequence2.at(current->col - 1));
@@ -59,7 +58,7 @@ std::pair<std::string, std::string> a_matrix::get_traceback() {
 	std::string alignment2;
 
 	cell* current = get_traceback_start();
-	while(!is_traceback_done(current)) {
+	while(is_traceback_done(current) == false) {
 		int delta_row = current->row - current->previous->row;
 		int delta_col = current->col - current->previous->col;
 		if (delta_row == 1 && delta_col == 1) {

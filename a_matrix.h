@@ -1,7 +1,5 @@
 #pragma once
 #include "matrix.h"
-#include "alignment_type.h"
-
 
 class a_matrix : public matrix
 {
@@ -11,6 +9,7 @@ public:
 		: matrix(size, substitution, gap_open, gap_extend), d_matrix(d_matrix), i_matrix(i_matrix) {};
 
 	virtual std::pair<std::string, std::string> get_traceback();
+	virtual cell* get_traceback_start();
 
 	friend class d_matrix;
 	friend class i_matrix;
@@ -23,7 +22,6 @@ protected:
 	virtual void fill_in_cell(cell* current, cell* above, cell* left, cell* above_left);
 
 	virtual bool is_traceback_done(cell* current);
-	virtual cell* get_traceback_start();
 
 	matrix* d_matrix;
 	matrix* i_matrix;

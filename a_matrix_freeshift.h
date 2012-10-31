@@ -3,13 +3,13 @@
 
 class a_matrix_freeshift : public a_matrix
 {
+public:
+	a_matrix_freeshift(unsigned int size, substitution_matrix* substitution,
+		int gap_open, int gap_extend, matrix* d_matrix, matrix* i_matrix)  
+		: a_matrix(size, substitution, gap_open, gap_extend, d_matrix, i_matrix) {};
+
 protected:
 	virtual int get_initial_score(int row, int col);
-
-	virtual void fill_in_cell(cell* current, cell* above, cell* left, cell* above_left);
 	virtual cell* get_traceback_start();
-
-	cell* max_freeshift;
-	int max_freeshift_score;
 };
 

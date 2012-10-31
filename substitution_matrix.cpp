@@ -3,11 +3,11 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <algorithm>
 
 using namespace std;
 
-substitution_matrix::substitution_matrix(std::string file, float scale_factor) : scale_factor(scale_factor)
-{
+substitution_matrix::substitution_matrix(std::string file, float scale_factor) : scale_factor(scale_factor) {
 	for(int i = 0; i < 256; i++) {
 		row_index[i] = -1;
 		col_index[i] = -1;
@@ -35,8 +35,7 @@ substitution_matrix::substitution_matrix(std::string file, float scale_factor) :
 			is_size_known = true;
 		}
 
-		if(line.length() > 0)
-		{
+		if(line.length() > 0) {
 			if(line.at(0) == '#') {
 				continue;
 			}
@@ -67,9 +66,11 @@ substitution_matrix::substitution_matrix(std::string file, float scale_factor) :
 				int current_col_index = 0;
 				std::string values = line.substr(6, line.length());
 				std::stringstream sstr(values);
-				int score = 0;
+				float score = 0.0f;
 				while (sstr >> score) {
-					scores[current_row_index][current_col_index] = (int) (score * scale_factor);
+					score *= scale_factor;
+					int rounded = (score > 0.0) ? floor(score + 0.5) : ceil(score - 0.5);
+					scores[current_row_index][current_col_index] = rounded;
 					current_col_index++;
 				}
 

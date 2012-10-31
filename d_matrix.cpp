@@ -13,8 +13,7 @@ int d_matrix::get_initial_score(int row, int col) {
 	return 0;
 }
 
-void d_matrix::fill_in_cell(cell* current, cell* above, cell* left,
-	cell* above_left) {
+void d_matrix::fill_in_cell(cell* current, cell* above, cell* left,	cell* above_left) {
 	int d_score = left->score + gap_extend;
 	int a_score = a_matrix->cells[current->row][current->col - 1].score + gap_open + gap_extend;
 
