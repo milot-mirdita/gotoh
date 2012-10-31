@@ -1,4 +1,5 @@
 #include <climits>
+#include <cstdlib>
 #include "i_matrix.h"
 
 void i_matrix::set_a_matrix(matrix* a) {
@@ -7,7 +8,7 @@ void i_matrix::set_a_matrix(matrix* a) {
 
 int i_matrix::get_initial_score(int row, int col) {
 	if(row == 0)
-		return INT_MIN + abs(gap_open) + abs(gap_extend) + 1;
+		return INT_MIN + std::abs(gap_open) + std::abs(gap_extend) + 1;
 	
 	return 0;
 }
