@@ -1,6 +1,6 @@
 #include "gotoh.h"
 
-gotoh::gotoh(unsigned int size, float gap_open, float gap_extend, substitution_matrix* matrix)
+gotoh::gotoh(unsigned int size, int gap_open, int gap_extend, substitution_matrix* matrix)
 	: size(size), gap_open(gap_open), gap_extend(gap_extend), matrix(matrix)
 {	
 	dm = new d_matrix(size, matrix, gap_open, gap_extend);
@@ -38,9 +38,9 @@ void gotoh::run(std::string sequence1, std::string sequence2) {
 		}
 	}
 
-	dm->print();
-	im->print();
-	am->print();
+	//dm->print();
+	//im->print();
+	//am->print();
 
 	std::pair<std::string, std::string> alignment = am->get_traceback();
 }

@@ -1,7 +1,7 @@
 #include "a_matrix_freeshift.h"
 #include "a_matrix.h"
 
-float a_matrix_freeshift::get_initial_score(int row, int col) {
+int a_matrix_freeshift::get_initial_score(int row, int col) {
 	if(row == 0 && col  > 0) {
 			return 0;
 	}

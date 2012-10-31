@@ -14,12 +14,12 @@ private:
 
 protected:
 	unsigned int size;
-	float gap_open;
-	float gap_extend;
+	int gap_open;
+	int gap_extend;
 	substitution_matrix* matrix;
 
 public:
-	gotoh(unsigned int size, float gap_open, float gap_extend, substitution_matrix* matrix);
+	gotoh(unsigned int size, int gap_open, int gap_extend, substitution_matrix* matrix);
 	~gotoh();
 	void run(std::string sequence1, std::string sequence2);
 };

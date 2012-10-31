@@ -4,7 +4,7 @@ struct cell
 {
 public:
 	cell* previous;
-	float score;
+	int score;
 	int row;
 	int col;
 };

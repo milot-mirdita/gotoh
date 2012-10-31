@@ -6,7 +6,7 @@
 
 using namespace std;
 
-substitution_matrix::substitution_matrix(std::string file)
+substitution_matrix::substitution_matrix(std::string file, float scale_factor) : scale_factor(scale_factor)
 {
 	for(int i = 0; i < 256; i++) {
 		row_index[i] = -1;
@@ -24,9 +24,9 @@ substitution_matrix::substitution_matrix(std::string file)
 	std::string line;
     while(std::getline(in, line)) {
 		if(!is_size_known && rows != 0 && cols != 0) {
-			scores = new float*[rows];
+			scores = new int*[rows];
 			for(int i = 0; i < rows; i++) {
-				scores[i] = new float[cols];
+				scores[i] = new int[cols];
 				for(int j = 0; j < cols; j++) {
 					scores[i][j] = 0.0f;
 				}
@@ -67,9 +67,9 @@ substitution_matrix::substitution_matrix(std::string file)
 				int current_col_index = 0;
 				std::string values = line.substr(6, line.length());
 				std::stringstream sstr(values);
-				float score = 0;
+				int score = 0;
 				while (sstr >> score) {
-					scores[current_row_index][current_col_index] = score;
+					scores[current_row_index][current_col_index] = (int) (score * scale_factor);
 					current_col_index++;
 				}
 
@@ -90,7 +90,7 @@ substitution_matrix::substitution_matrix(std::string file)
 void substitution_matrix::normalize() {
 	for(int i = rows - 1; i >= 0; i--) {
 		for(int j = cols - 1; j >= 0; j--) {
-			float score = scores[i][j];
+			int score = scores[i][j];
 			if(score != 0.0f && scores[j][i] == 0.0f) {
 				scores[j][i] = score;
 			}
@@ -112,7 +112,7 @@ void substitution_matrix::parse_index_col(std::string index) {
 	}
 }
 
-float substitution_matrix::get_score(char residue1, char residue2) {
+int substitution_matrix::get_score(char residue1, char residue2) {
 	int row = row_index[residue1];
 	int col = col_index[residue2];
 

@@ -5,7 +5,7 @@
 
 class matrix {
 public:
-	matrix(unsigned int size, substitution_matrix* substitution, float gap_open, float gap_extend);
+	matrix(unsigned int size, substitution_matrix* substitution, int gap_open, int gap_extend);
 	~matrix();
 
 	void init(void);
@@ -21,8 +21,8 @@ public:
 	int cols;
 
 	unsigned int max_size;
-	float gap_open;
-	float gap_extend;
+	int gap_open;
+	int gap_extend;
 
 	std::string sequence1;
 	std::string sequence2;
@@ -33,7 +33,7 @@ protected:
 	void initialize_scores(void);
 	void initialize_pointers(void);
 
-	virtual float get_initial_score(int row, int col) = 0;
+	virtual int get_initial_score(int row, int col) = 0;
 	virtual cell* get_initial_pointer(int row, int col) = 0;
 	virtual void fill_in_cell(cell* current, cell* above, cell* left, cell* above_left) = 0;
 

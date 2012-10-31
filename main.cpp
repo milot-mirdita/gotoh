@@ -13,8 +13,8 @@
 int main(int argc, char* argv[])
 {
 	TCLAP::CmdLine cmd("Gotoh", '=', "0.01" );
-	TCLAP::ValueArg<float> gap_open_arg("o", "gap-open", "gap open score (Standard -12)", false, -10.0f, "float", cmd);
-	TCLAP::ValueArg<float> gap_extend_arg("e", "gap-extend", "gap extend score (Standard -1)", false, -2.0f, "float", cmd);
+	TCLAP::ValueArg<float> gap_open_arg("o", "gap-open", "gap open score (Standard -12)", false, -10.0f, "int", cmd);
+	TCLAP::ValueArg<float> gap_extend_arg("e", "gap-extend", "gap extend score (Standard -1)", false, -2.0f, "int", cmd);
 
 	TCLAP::SwitchArg print_alignment_arg("a", "printali","gibt auch jedes Alignment aus", cmd, false);
 	TCLAP::SwitchArg check_arg("c", "check","ueberprueft die berechneten Scores anhand des Alignments", cmd, false);
@@ -37,11 +37,15 @@ int main(int argc, char* argv[])
 	TCLAP::ValueArg<std::string> pairs_libarary_arg("p", "pairs","Name to print", true, "", "string", cmd);
 	cmd.parse( argc, argv );
 
+	float scale_factor = 10.0f;
+	int gap_open = (int) (gap_open_arg.getValue() * scale_factor);
+	int gap_extend = (int) (gap_extend_arg.getValue() * scale_factor);
+
 	sequence_library sequences(sequence_library_arg.getValue());
  	pairs_library pairs(pairs_libarary_arg.getValue());
- 	substitution_matrix matrix(substitution_matrix_arg.getValue());
+ 	substitution_matrix matrix(substitution_matrix_arg.getValue(), scale_factor);
  
-	gotoh runner(sequences.max_length, gap_open_arg.getValue(), gap_extend_arg.getValue(), &matrix);
+	gotoh runner(sequences.max_length, gap_open, gap_extend, &matrix);
  	int counter = 0;
  	for(auto i = pairs.pairs.begin(); i != pairs.pairs.end(); i++) {
  		std::string sequence1 = sequences.get_sequence(i->first);

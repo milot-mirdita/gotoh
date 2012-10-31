@@ -9,6 +9,6 @@ protected:
 	virtual cell* get_traceback_start();
 
 	cell* max_local;
-	float max_local_score;
+	int max_local_score;
 };
 

@@ -48,9 +48,6 @@
     <ClInclude Include="d_matrix.h">
       <Filter>Header Files\gotoh</Filter>
     </ClInclude>
-    <ClInclude Include="alignment_type.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="substitution_matrix.h">
       <Filter>Header Files\parsers</Filter>
     </ClInclude>
