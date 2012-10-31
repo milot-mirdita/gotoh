@@ -2,7 +2,7 @@
 #include <iostream>
 
 matrix::matrix(unsigned int size, substitution_matrix* substitution, int gap_open, int gap_extend) 
-	: sequence1(sequence1), sequence2(sequence2), gap_open(gap_open), gap_extend(gap_extend), substitution(substitution), max_size(size + 1) {
+	: gap_open(gap_open), gap_extend(gap_extend), substitution(substitution), max_size(size + 1) {
 	cells = new cell*[max_size];
 	for (unsigned int i = 0; i < max_size; i++) {
 		cells[i] = new cell[max_size];

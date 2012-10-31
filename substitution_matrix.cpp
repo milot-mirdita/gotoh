@@ -28,7 +28,7 @@ substitution_matrix::substitution_matrix(std::string file, float scale_factor) :
 			for(int i = 0; i < rows; i++) {
 				scores[i] = new int[cols];
 				for(int j = 0; j < cols; j++) {
-					scores[i][j] = 0.0f;
+					scores[i][j] = 0;
 				}
 			}	
 
@@ -112,7 +112,7 @@ void substitution_matrix::parse_index_col(std::string index) {
 	}
 }
 
-int substitution_matrix::get_score(char residue1, char residue2) {
+int substitution_matrix::get_score(unsigned char residue1, unsigned char residue2) {
 	int row = row_index[residue1];
 	int col = col_index[residue2];
 
