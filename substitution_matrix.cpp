@@ -69,7 +69,7 @@ substitution_matrix::substitution_matrix(std::string file, float scale_factor) :
 				float score = 0.0f;
 				while (sstr >> score) {
 					score *= scale_factor;
-					int rounded = (score > 0.0) ? floor(score + 0.5) : ceil(score - 0.5);
+					int rounded = (int) ((score > 0.0) ? floor(score + 0.5) : ceil(score - 0.5));
 					scores[current_row_index][current_col_index] = rounded;
 					current_col_index++;
 				}

@@ -1,5 +1,9 @@
 #include "a_matrix_local.h"
 
+int a_matrix_local::get_initial_score(int row, int col) {
+	return 0;
+}
+
 void a_matrix_local::fill_in_cell(cell* current, cell* above, cell* left, cell* above_left) {
 	int d_score = d_matrix->cells[current->row][current->col].score;
 	int i_score = i_matrix->cells[current->row][current->col].score;
@@ -43,3 +47,10 @@ bool a_matrix_local::is_traceback_done(cell* current) {
 cell* a_matrix_local::get_traceback_start() {
 	return max_local;
 }
+
+void a_matrix_local::set_sequences(std::string sequence1, std::string sequence2) {
+	a_matrix::set_sequences(sequence1, sequence2);
+
+	max_local_score = INT_MIN + 500;
+	max_local = 0;
+};

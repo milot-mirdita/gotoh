@@ -58,11 +58,48 @@ void matrix::fill_in(int row, int col) {
 }
 
 void matrix::print() {
+	std::cout << " \t \t";
+	for(int i = 1; i < rows; i++) {
+		std::cout << sequence1[i - 1] << '\t';
+	}
+	std::cout << std::endl;
+
 	for (int i = 0; i < rows; i++) {
+		if(i == 0) {
+			std::cout << " \t";
+		}
+		if(i > 0) {
+			std::cout << sequence2[i - 1] << '\t';
+		}
 		for (int j = 0; j < cols; j++) {
 			std::cout << cells[i][j].score / substitution->scale_factor << '\t';
 		}
 		std::cout << std::endl;
 	}
 	std::cout << std::endl;	 
+}
+
+void matrix::print_html() {
+	std::cout << "<table>" << std::endl;
+	std::cout << "<thead><tr><td></td><td></td>" << std::endl;
+	for(int i = 1; i < rows; i++) {
+		std::cout << "<th>" << sequence1[i - 1] << "</th>" << std::endl;
+	}
+	std::cout << "</tr></thead>" << std::endl;
+	std::cout << "<tbody>" << std::endl;
+	for (int i = 0; i < rows; i++) {
+		std::cout << "<tr>" << std::endl;
+		if(i == 0) {
+			std::cout << "<td></td>";
+		}
+		if(i > 0) {
+			std::cout << "<td>" << sequence2[i - 1] << "</td>" << std::endl;
+		}
+		for (int j = 0; j < cols; j++) {
+			std::cout << "<td>" << cells[i][j].score / substitution->scale_factor << "</td>" << std::endl;
+		}
+		std::cout << "</tr>" << std::endl;
+		std::cout << "</tbody>" << std::endl;
+	}
+	std::cout << "</table>" << std::endl;	 
 }

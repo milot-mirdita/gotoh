@@ -10,12 +10,13 @@ public:
 
 	void init(void);
 
-	void set_sequences(std::string sequence1, std::string sequence2);
+	virtual void set_sequences(std::string sequence1, std::string sequence2);
 	void fill_in(int row, int col);
 
 	virtual std::pair<std::string, std::string> get_traceback() = 0;
 
 	void print(void);
+	void print_html(void);
 
 	int rows;
 	int cols;

@@ -58,6 +58,21 @@ std::pair<std::string, std::string> a_matrix::get_traceback() {
 	std::string alignment2;
 
 	cell* current = get_traceback_start();
+
+	int start_rows = rows - 1;
+	while(start_rows > current->row) {
+		alignment2.push_back(sequence1.at(start_rows - 1));
+		alignment1.push_back('-');
+		start_rows--;
+	}
+
+	int start_cols = cols - 1;
+	while(start_cols > current->col) {
+		alignment1.push_back(sequence2.at(start_cols - 1));
+		alignment2.push_back('-');
+		start_cols--;
+	}
+
 	while(is_traceback_done(current) == false) {
 		int delta_row = current->row - current->previous->row;
 		int delta_col = current->col - current->previous->col;
@@ -72,6 +87,20 @@ std::pair<std::string, std::string> a_matrix::get_traceback() {
 			alignment2.push_back('-');
 		}
 		current = current->previous;
+	}
+
+	int remaining_rows = current->row;
+	while(remaining_rows > 0) {
+		alignment2.push_back(sequence1.at(remaining_rows - 1));
+		alignment1.push_back('-');
+		remaining_rows--;
+	}
+
+	int remaining_cols = current->col;
+	while(remaining_cols > 0) {
+		alignment1.push_back(sequence2.at(remaining_cols - 1));
+		alignment2.push_back('-');
+		remaining_cols--;
 	}
 
 	std::string reverse_alignment1(alignment1);

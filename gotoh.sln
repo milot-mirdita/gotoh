@@ -1,23 +1,23 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gotoh", "gotoh.vcxproj", "{C91AFEAD-2F40-4E57-A6F1-58B7E3823DE0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
-		Fast Debug|Win32 = Fast Debug|Win32
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C91AFEAD-2F40-4E57-A6F1-58B7E3823DE0}.Debug|Win32.ActiveCfg = Debug|Win32
 		{C91AFEAD-2F40-4E57-A6F1-58B7E3823DE0}.Debug|Win32.Build.0 = Debug|Win32
-		{C91AFEAD-2F40-4E57-A6F1-58B7E3823DE0}.Fast Debug|Win32.ActiveCfg = Fast Debug|Win32
-		{C91AFEAD-2F40-4E57-A6F1-58B7E3823DE0}.Fast Debug|Win32.Build.0 = Fast Debug|Win32
 		{C91AFEAD-2F40-4E57-A6F1-58B7E3823DE0}.Release|Win32.ActiveCfg = Release|Win32
 		{C91AFEAD-2F40-4E57-A6F1-58B7E3823DE0}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

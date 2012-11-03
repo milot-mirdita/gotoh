@@ -55,8 +55,14 @@ std::pair<std::string, std::string>  gotoh::get_alignment() {
 	return am->get_traceback();
 }
 
-void gotoh::print_matrices() {
-	dm->print();
-	im->print();
-	am->print();
+void gotoh::print_matrices(std::string type = "txt") {
+	if (type.find("txt") != std::string::npos) {
+		dm->print();
+		im->print();
+		am->print();
+	} else if (type.find("html") != std::string::npos) {
+		dm->print_html();
+		im->print_html();
+		am->print_html();
+	}
 }
