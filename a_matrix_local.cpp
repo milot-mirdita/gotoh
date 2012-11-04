@@ -67,4 +67,4 @@ void a_matrix_local::set_sequences(std::string sequence1, std::string sequence2)
 
 	max_local_score = min_score;
 	max_local = 0;
-};
+}

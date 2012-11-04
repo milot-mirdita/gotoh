@@ -1,7 +1,5 @@
 #pragma once
 #include "matrix.h"
-#include <climits>
-#include <cstdlib>
 
 class i_matrix : public matrix
 {

@@ -1,5 +1,7 @@
 #include "matrix.h"
 #include <iostream>
+#include <climits>
+#include <cstdlib>
 
 matrix::matrix(unsigned int size, substitution_matrix* substitution, int gap_open, int gap_extend) 
 	: max_size(size + 1), gap_open(gap_open), gap_extend(gap_extend), substitution(substitution), 
@@ -47,10 +49,9 @@ void matrix::initialize_pointers() {
 
 void matrix::set_sequences(std::string sequence1, std::string sequence2) {
 	this->sequence1 = new char [sequence1.size()+1];
-	strcpy_s(this->sequence1, sequence1.size()+1, sequence1.c_str());
-
+	sequence1.copy(this->sequence1, sequence1.size()+1, 0);
 	this->sequence2 = new char [sequence2.size()+1];
-	strcpy_s(this->sequence2, sequence2.size()+1, sequence2.c_str());
+	sequence2.copy(this->sequence2, sequence2.size()+1, 0);
 
 	rows = sequence1.size() + 1;
 	cols = sequence2.size() + 1;

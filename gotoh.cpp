@@ -54,6 +54,8 @@ float gotoh::get_score() {
 float gotoh::get_score(std::pair<std::string, std::string> alignment) {
 	std::string sequence1 = alignment.first;
 	std::string sequence2 = alignment.second;
+	
+	return 0.0f;
 }
 
 std::pair<std::string, std::string>  gotoh::get_alignment() {
