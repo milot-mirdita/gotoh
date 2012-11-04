@@ -109,7 +109,7 @@ std::pair<std::string, std::string> a_matrix::get_traceback() {
 	std::string reverse_alignment2(alignment2);
 	std::reverse(reverse_alignment2.begin(), reverse_alignment2.end());
 
-	return std::pair<std::string, std::string>(reverse_alignment1, reverse_alignment2);
+	return std::pair<std::string, std::string>(reverse_alignment2, reverse_alignment1);
 }
 
 bool a_matrix::is_traceback_done(cell* current) {
