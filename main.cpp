@@ -9,6 +9,8 @@
 #include "sequence_library.h"
 #include "pairs_library.h"
 
+#include <omp.h>
+
 #define SINGLE_RUN 0
 
 int main(int argc, char* argv[]) {
@@ -47,25 +49,40 @@ int main(int argc, char* argv[]) {
  	pairs_library pairs(pairs_libarary_arg.getValue());
  	substitution_matrix matrix(substitution_matrix_arg.getValue(), scale_factor);
  
+#pragma omp parallel
+{
+	int thread_count = omp_get_num_threads();
+	int thread_num   = omp_get_thread_num();
+	size_t chunk_size= pairs.pairs.size() / thread_count;
+	unsigned int start = thread_num * chunk_size;
+
 	gotoh runner(sequences.max_length, gap_open, gap_extend, &matrix, alignment_modes_arg.getValue());
- 	for(auto i = pairs.pairs.begin(); i != pairs.pairs.end(); i++) {
- 		std::string sequence1 = sequences.get_sequence(i->first);
- 		std::string sequence2 = sequences.get_sequence(i->second);
+	for(unsigned int i = start; i < start + chunk_size; i++) {
+ 		std::string sequence1 = sequences.get_sequence(pairs.pairs[i].first);
+ 		std::string sequence2 = sequences.get_sequence(pairs.pairs[i].second);
 		runner.run(sequence1, sequence2);
 
 		if(print_alignment_arg.getValue() == false) {
-			std::cout << i->first << " " << i->second << " " << runner.get_score() << std::endl;
+			#pragma omp single
+			std::cout << pairs.pairs[i].first << " " << pairs.pairs[i].second << " " << runner.get_score() << std::endl;
 		} else {
 			auto alignment = runner.get_alignment();
-			std::cout << "> " << i->first << " " << i->second << " " << runner.get_score() << std::endl;
-			std::cout << i->first << ": " << alignment.first << std::endl;
-			std::cout << i->second << ": " << alignment.second << std::endl;
+			#pragma omp single 
+			{
+				std::cout << ">" << pairs.pairs[i].first << " " << pairs.pairs[i].second << " " << runner.get_score() << std::endl;
+				std::cout << pairs.pairs[i].first << ": " << alignment.first << std::endl;
+				std::cout << pairs.pairs[i].second << ": " << alignment.second << std::endl;
+			}
 		}
 
+		#pragma omp single
 		if(print_matrices_arg.getValue().find("none") == std::string::npos) {
 			runner.print_matrices(print_matrices_arg.getValue());
 		}
 	}
+}
+
+	
 #else
 	substitution_matrix matrix("C:\\Users\\Milot\\Documents\\Visual Studio 2010\\Projects\\gotoh\\Debug\\matrices\\dayhoff.mat", 10.0f);
 	gotoh runner(250, -120, -10, &matrix, "global");
