@@ -9,7 +9,7 @@
 #include "sequence_library.h"
 #include "pairs_library.h"
 
-#define SINGLE_RUN 1
+#define SINGLE_RUN 0
 
 int main(int argc, char* argv[]) {
 #if !SINGLE_RUN
@@ -68,7 +68,7 @@ int main(int argc, char* argv[]) {
 	}
 #else
 	substitution_matrix matrix("C:\\Users\\Milot\\Documents\\Visual Studio 2010\\Projects\\gotoh\\Debug\\matrices\\dayhoff.mat", 10.0f);
-	gotoh runner(250, -120.0f, -10.0f, &matrix, "global");
+	gotoh runner(250, -120, -10, &matrix, "global");
 	runner.run("GPLDVQVTE", "MEEAKQKVV");
 	auto result = runner.get_alignment();
 	std::cout << runner.get_score() << std::endl;

@@ -21,12 +21,12 @@ public:
 	int rows;
 	int cols;
 
-	unsigned int max_size;
-	int gap_open;
-	int gap_extend;
+	const unsigned int max_size;
+	const int gap_open;
+	const int gap_extend;
 
-	std::string sequence1;
-	std::string sequence2;
+	char* sequence1;
+	char* sequence2;
 
 	cell** cells;	
 
@@ -42,4 +42,6 @@ protected:
 	virtual cell* get_traceback_start() = 0;
 
 	substitution_matrix* substitution;
+
+	const int min_score;
 };

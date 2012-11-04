@@ -31,7 +31,7 @@ cell* a_matrix::get_initial_pointer(int row, int col) {
 void a_matrix::fill_in_cell(cell* current, cell* above, cell* left, cell* above_left) {
 	int d_score = d_matrix->cells[current->row][current->col].score;
 	int i_score = i_matrix->cells[current->row][current->col].score;
-	int substitution_score = substitution->get_score(sequence1.at(current->row - 1), sequence2.at(current->col - 1));
+	int substitution_score = substitution->get_score(sequence1[current->row - 1], sequence2[current->col - 1]);
 	int a_score = above_left->score + substitution_score;
 
 	if (d_score >= i_score) {
@@ -61,14 +61,14 @@ std::pair<std::string, std::string> a_matrix::get_traceback() {
 
 	int start_rows = rows - 1;
 	while(start_rows > current->row) {
-		alignment2.push_back(sequence1.at(start_rows - 1));
+		alignment2.push_back(sequence1[start_rows - 1]);
 		alignment1.push_back('-');
 		start_rows--;
 	}
 
 	int start_cols = cols - 1;
 	while(start_cols > current->col) {
-		alignment1.push_back(sequence2.at(start_cols - 1));
+		alignment1.push_back(sequence2[start_cols - 1]);
 		alignment2.push_back('-');
 		start_cols--;
 	}
@@ -77,13 +77,13 @@ std::pair<std::string, std::string> a_matrix::get_traceback() {
 		int delta_row = current->row - current->previous->row;
 		int delta_col = current->col - current->previous->col;
 		if (delta_row == 1 && delta_col == 1) {
-			alignment1.push_back(sequence2.at(current->col - 1));
-			alignment2.push_back(sequence1.at(current->row - 1));
+			alignment1.push_back(sequence2[current->col - 1]);
+			alignment2.push_back(sequence1[current->row - 1]);
 		} else if (delta_row == 1 && delta_col == 0) {
-			alignment2.push_back(sequence1.at(current->row - 1));
+			alignment2.push_back(sequence1[current->row - 1]);
 			alignment1.push_back('-');
 		} else if (delta_row == 0 && delta_col == 1) {
-			alignment1.push_back(sequence2.at(current->col - 1));
+			alignment1.push_back(sequence2[current->col - 1]);
 			alignment2.push_back('-');
 		}
 		current = current->previous;
@@ -91,14 +91,14 @@ std::pair<std::string, std::string> a_matrix::get_traceback() {
 
 	int remaining_rows = current->row;
 	while(remaining_rows > 0) {
-		alignment2.push_back(sequence1.at(remaining_rows - 1));
+		alignment2.push_back(sequence1[remaining_rows - 1]);
 		alignment1.push_back('-');
 		remaining_rows--;
 	}
 
 	int remaining_cols = current->col;
 	while(remaining_cols > 0) {
-		alignment1.push_back(sequence2.at(remaining_cols - 1));
+		alignment1.push_back(sequence2[remaining_cols - 1]);
 		alignment2.push_back('-');
 		remaining_cols--;
 	}

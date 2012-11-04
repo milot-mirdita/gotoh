@@ -2,7 +2,8 @@
 #include <iostream>
 
 matrix::matrix(unsigned int size, substitution_matrix* substitution, int gap_open, int gap_extend) 
-	 : max_size(size + 1), gap_open(gap_open), gap_extend(gap_extend), substitution(substitution) {
+	: max_size(size + 1), gap_open(gap_open), gap_extend(gap_extend), substitution(substitution), 
+	min_score(INT_MIN + std::abs(gap_open) + std::abs(gap_extend) + 1) {
 	cells = new cell*[max_size];
 	for (unsigned int i = 0; i < max_size; i++) {
 		cells[i] = new cell[max_size];
@@ -18,6 +19,9 @@ matrix::~matrix() {
 		delete cells[i];
 	}
 	delete cells;
+
+	delete[] sequence1;
+	delete[] sequence2;
 }
 
 void matrix::init() {
@@ -42,11 +46,14 @@ void matrix::initialize_pointers() {
 }
 
 void matrix::set_sequences(std::string sequence1, std::string sequence2) {
-	this->sequence1 = sequence1;
-	this->sequence2 = sequence2;
+	this->sequence1 = new char [sequence1.size()+1];
+	strcpy_s(this->sequence1, sequence1.size()+1, sequence1.c_str());
 
-	rows = sequence1.length() + 1;
-	cols = sequence2.length() + 1;
+	this->sequence2 = new char [sequence2.size()+1];
+	strcpy_s(this->sequence2, sequence2.size()+1, sequence2.c_str());
+
+	rows = sequence1.size() + 1;
+	cols = sequence2.size() + 1;
 }
 
 void matrix::fill_in(int row, int col) {

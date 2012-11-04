@@ -113,14 +113,6 @@ void substitution_matrix::parse_index_col(std::string index) {
 	}
 }
 
-int substitution_matrix::get_score(unsigned char residue1, unsigned char residue2) {
-	int row = row_index[residue1];
-	int col = col_index[residue2];
-
-	return scores[row][col];
-}
-
-
 substitution_matrix::~substitution_matrix(void) {	
 	for(int i = 0; i < rows; i++) {
 		delete scores[i];

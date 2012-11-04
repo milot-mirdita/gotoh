@@ -7,30 +7,44 @@ int a_matrix_local::get_initial_score(int row, int col) {
 void a_matrix_local::fill_in_cell(cell* current, cell* above, cell* left, cell* above_left) {
 	int d_score = d_matrix->cells[current->row][current->col].score;
 	int i_score = i_matrix->cells[current->row][current->col].score;
-	int substitution_score = substitution->get_score(sequence1.at(current->row - 1), sequence2.at(current->col - 1));
+	int substitution_score = substitution->get_score(sequence1[current->row - 1], sequence2[current->col - 1]);
 	int a_score = above_left->score + substitution_score;
-
-	if(std::max(d_score, std::max(i_score, std::max(a_score, 0))) == 0) {
-		current->score = 0;
-		current->previous = 0;
-		return;
-	}
 
 	if (d_score >= i_score) {
 		if (a_score >= d_score) {
-			current->score = a_score;
-			current->previous = above_left;
+			if(a_score > 0) {
+				current->score = a_score;
+				current->previous = above_left;
+			} else {
+				current->score = 0;
+				current->previous = 0;
+			}
 		} else {
-			current->score = d_score;
-			current->previous = left;
+			if(d_score > 0) {
+				current->score = d_score;
+				current->previous = left;
+			} else {
+				current->score = 0;
+				current->previous = 0;
+			}
 		}
 	} else {
 		if (a_score >= i_score) {
-			current->score = a_score;
-			current->previous = above_left;
+			if(a_score > 0) {
+				current->score = a_score;
+				current->previous = above_left;
+			} else {
+				current->score = 0;
+				current->previous = 0;
+			}
 		} else {
-			current->score = i_score;
-			current->previous = above;
+			if(i_score > 0) {
+				current->score = i_score;
+				current->previous = above;
+			} else {
+				current->score = 0;
+				current->previous = 0;
+			}
 		}
 	}
 
@@ -51,6 +65,6 @@ cell* a_matrix_local::get_traceback_start() {
 void a_matrix_local::set_sequences(std::string sequence1, std::string sequence2) {
 	a_matrix::set_sequences(sequence1, sequence2);
 
-	max_local_score = INT_MIN + 500;
+	max_local_score = min_score;
 	max_local = 0;
 };

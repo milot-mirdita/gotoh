@@ -3,7 +3,7 @@
 #include "a_matrix_local.h"
 
 gotoh::gotoh(unsigned int size, int gap_open, int gap_extend, substitution_matrix* matrix, std::string alignment_type)
-	: size(size), gap_open(gap_open), gap_extend(gap_extend), matrix(matrix) {	
+	: size(size), gap_open(gap_open), gap_extend(gap_extend), matrix(matrix), alignment_type(alignment_type) {	
 	dm = new d_matrix(size, matrix, gap_open, gap_extend);
 	im = new i_matrix(size, matrix, gap_open, gap_extend);
 
@@ -49,6 +49,11 @@ void gotoh::run(std::string sequence1, std::string sequence2) {
 float gotoh::get_score() {
 	cell* score_cell = am->get_traceback_start();
 	return (float) score_cell->score / matrix->scale_factor;
+}
+
+float gotoh::get_score(std::pair<std::string, std::string> alignment) {
+	std::string sequence1 = alignment.first;
+	std::string sequence2 = alignment.second;
 }
 
 std::pair<std::string, std::string>  gotoh::get_alignment() {

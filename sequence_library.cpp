@@ -8,7 +8,7 @@ sequence_library::sequence_library(std::string file) {
 	std::ifstream in(file.c_str());
 	std::string line;
 	while(std::getline(in, line)) {
-        std::vector<std::string> myvect= split(line,':');
+        std::vector<std::string> myvect = split(line,':');
 		std::string identifier = myvect.at(0);
 		std::string sequence = myvect.at(1);
 		sequences.insert(std::pair<std::string, std::string>(identifier, sequence));
