@@ -10,16 +10,18 @@ public:
 			max_local_score = min_score;
 	};
 
+	virtual void fill_in(int row, int col);
+
 protected:
 	virtual void set_sequences(std::string sequence1, std::string sequence2);
 
 	virtual int get_initial_score(int row, int col);
-	virtual void fill_in_cell(cell* current, cell* above, cell* left, cell* above_left);
 
-	virtual bool is_traceback_done(cell* current);
-	virtual cell* get_traceback_start();
 
-	cell* max_local;
+	virtual bool is_traceback_done(int current);
+	virtual int get_traceback_start();
+
+	int max_local;
 	int max_local_score;
 };
 

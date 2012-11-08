@@ -129,7 +129,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>lib/</AdditionalIncludeDirectories>
-      <OmitFramePointers>true</OmitFramePointers>
+      <OmitFramePointers>false</OmitFramePointers>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -192,7 +192,6 @@
     <ClInclude Include="a_matrix.h" />
     <ClInclude Include="a_matrix_freeshift.h" />
     <ClInclude Include="a_matrix_local.h" />
-    <ClInclude Include="cell.h" />
     <ClInclude Include="d_matrix.h" />
     <ClInclude Include="gotoh.h" />
     <ClInclude Include="i_matrix.h" />

@@ -10,6 +10,6 @@ public:
 
 protected:
 	virtual int get_initial_score(int row, int col);
-	virtual cell* get_traceback_start();
+	virtual int get_traceback_start();
 };
 

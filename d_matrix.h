@@ -13,13 +13,13 @@ public:
 	void set_a_matrix(matrix* a_matrix);
 	friend class a_matrix;
 
+	virtual void fill_in(int row, int col);
+
 protected:
 	virtual int get_initial_score(int row, int col);
-	virtual cell* get_initial_pointer(int row, int col) { return 0; };
-	virtual void fill_in_cell(cell* current, cell* above, cell* left, cell* above_left);
 
 private:
 	virtual std::pair<std::string, std::string> get_traceback() { return std::pair<std::string, std::string>(); };
-	virtual bool is_traceback_done(cell* current) { return false; };
-	virtual cell* get_traceback_start() { return 0; };
+	virtual bool is_traceback_done(int current) { return false; };
+	virtual int get_traceback_start() { return 0; };
 };

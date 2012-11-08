@@ -54,12 +54,21 @@ int main(int argc, char* argv[]) {
 		runner.run(sequence1, sequence2);
 
 		if(print_alignment_arg.getValue() == false) {
-			std::cout << i->first << " " << i->second << " " << runner.get_score() << std::endl;
+			float score = runner.get_score();
+			std::cout << i->first << " " << i->second << " " << score << std::endl;
 		} else {
 			auto alignment = runner.get_alignment();
 			std::cout << "> " << i->first << " " << i->second << " " << runner.get_score() << std::endl;
 			std::cout << i->first << ": " << alignment.first << std::endl;
 			std::cout << i->second << ": " << alignment.second << std::endl;
+			if(check_arg.getValue()) {
+				float check_score = runner.get_score(alignment);
+				if(check_score != runner.get_score()) {
+					std::cout << "check: false, score: " << check_score << std::endl;
+				} else {
+					std::cout << "check: true, score: " << check_score << std::endl;
+				}
+			}
 		}
 
 		if(print_matrices_arg.getValue().find("none") == std::string::npos) {
@@ -72,7 +81,7 @@ int main(int argc, char* argv[]) {
 	runner.run("GPLDVQVTE", "MEEAKQKVV");
 	auto result = runner.get_alignment();
 	std::cout << runner.get_score() << std::endl;
-	runner.print_matrices("html");
+	runner.print_matrices("txt");
 	system("pause");
 #endif
 	return 0;

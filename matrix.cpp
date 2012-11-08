@@ -6,48 +6,31 @@
 matrix::matrix(unsigned int size, substitution_matrix* substitution, int gap_open, int gap_extend) 
 	: max_size(size + 1), gap_open(gap_open), gap_extend(gap_extend), substitution(substitution), 
 	min_score(INT_MIN + std::abs(gap_open) + std::abs(gap_extend) + 1) {
-	cells = new cell*[max_size];
-	for (unsigned int i = 0; i < max_size; i++) {
-		cells[i] = new cell[max_size];
-		for (unsigned int j = 0; j < max_size; j++) {
-			cell c = {0, 0, i, j};
-			cells[i][j] = c;
-		}
-	}
+	cells = new int[max_size * max_size];
 }
 
 matrix::~matrix() {
-	for (unsigned int i = 0; i < max_size; i++) {
-		delete cells[i];
-	}
+	delete[] cells;
 	delete cells;
-
 	delete[] sequence1;
+	delete sequence1;
 	delete[] sequence2;
+	delete sequence2;
 }
 
 void matrix::init() {
 	initialize_scores();
-	initialize_pointers();
 }
 
 void matrix::initialize_scores() {
-	for (unsigned int i = 0; i < max_size; i++) {
-		for (unsigned int j = 0; j < max_size; j++) {
-			cells[i][j].score = get_initial_score(i, j);
-		}
-	}
-}
-
-void matrix::initialize_pointers() {
-	for (unsigned int i = 0; i < max_size; i++) {
-		for (unsigned int j = 0; j < max_size; j++) {
-			cells[i][j].previous = get_initial_pointer(i, j);
-		}
+	for (unsigned int i = 0; i < max_size * max_size; i++) {
+		cells[i] = get_initial_score(i / max_size, i % max_size);
 	}
 }
 
 void matrix::set_sequences(std::string sequence1, std::string sequence2) {
+// dont want to maintain a different version for vc++ and g++
+#pragma warning( disable : 4996 )
 	this->sequence1 = new char [sequence1.size()+1];
 	sequence1.copy(this->sequence1, sequence1.size()+1, 0);
 	this->sequence2 = new char [sequence2.size()+1];
@@ -55,14 +38,6 @@ void matrix::set_sequences(std::string sequence1, std::string sequence2) {
 
 	rows = sequence1.size() + 1;
 	cols = sequence2.size() + 1;
-}
-
-void matrix::fill_in(int row, int col) {
-	cell* currentCell = &cells[row][col];
-	cell* cellAbove = &cells[row - 1][col];
-	cell* cellToLeft = &cells[row][col - 1];
-	cell* cellAboveLeft = &cells[row - 1][col - 1];
-	fill_in_cell(currentCell, cellAbove, cellToLeft, cellAboveLeft);
 }
 
 void matrix::print() {
@@ -80,7 +55,7 @@ void matrix::print() {
 			std::cout << sequence2[i - 1] << '\t';
 		}
 		for (int j = 0; j < cols; j++) {
-			std::cout << cells[i][j].score / substitution->scale_factor << '\t';
+			std::cout << cells[i * max_size + j] / substitution->scale_factor << '\t';
 		}
 		std::cout << std::endl;
 	}
@@ -104,7 +79,7 @@ void matrix::print_html() {
 			std::cout << "<td>" << sequence2[i - 1] << "</td>" << std::endl;
 		}
 		for (int j = 0; j < cols; j++) {
-			std::cout << "<td>" << cells[i][j].score / substitution->scale_factor << "</td>" << std::endl;
+			std::cout << "<td>" << cells[i * max_size + j] / substitution->scale_factor << "</td>" << std::endl;
 		}
 		std::cout << "</tr>" << std::endl;
 		std::cout << "</tbody>" << std::endl;

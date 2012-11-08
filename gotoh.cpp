@@ -47,15 +47,33 @@ void gotoh::run(std::string sequence1, std::string sequence2) {
 }
 
 float gotoh::get_score() {
-	cell* score_cell = am->get_traceback_start();
-	return (float) score_cell->score / matrix->scale_factor;
+	int score_cell = am->get_traceback_start();
+	return (float) am->cells[score_cell] / matrix->scale_factor;
 }
 
 float gotoh::get_score(std::pair<std::string, std::string> alignment) {
 	std::string sequence1 = alignment.first;
 	std::string sequence2 = alignment.second;
+	if(sequence1.length() != sequence2.length())
+		return -FLT_MAX;
 	
-	return 0.0f;
+	int score = 0;
+	bool is_gap_open = false;
+	for(unsigned int i = 0; i < sequence1.length(); i++) {
+		if(sequence1.at(i) == '-' || sequence2.at(i) == '-') {
+			if(is_gap_open) {
+				score += gap_extend;
+			} else {
+				score += gap_open;
+				is_gap_open = true;
+			}
+			continue;
+		}
+		score += matrix->get_score(sequence1.at(i), sequence2.at(i));
+		is_gap_open = false;
+	}
+	
+	return ((float)score) / ((float) matrix->scale_factor);
 }
 
 std::pair<std::string, std::string>  gotoh::get_alignment() {

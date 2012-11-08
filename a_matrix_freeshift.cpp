@@ -14,23 +14,25 @@ int a_matrix_freeshift::get_initial_score(int row, int col) {
 	return a_matrix::get_initial_score(row, col);
 }
 
-cell* a_matrix_freeshift::get_traceback_start() {
+int a_matrix_freeshift::get_traceback_start() {
 	int max_score = INT_MIN;
-	cell* start = 0;
+	int start = 0;
 
 	for(int i = 0; i < rows; i++) {
-		cell* current = &cells[i][cols - 1];
-		if(current->score > max_score) {
-			max_score = current->score;
-			start = current;
+		int current_index = i * max_size + (cols - 1);
+		int current_score = cells[current_index];
+		if(current_score > max_score) {
+			max_score = current_score;
+			start = current_index;
 		}
 	}
 
 	for(int i = 0; i < cols; i++) {
-		cell* current = &cells[rows - 1][i];
-		if(current->score > max_score) {
-			max_score = current->score;
-			start = current;
+		int current_index = (rows - 1) * max_size + i;
+		int current_score = cells[current_index];
+		if(current_score > max_score) {
+			max_score = current_score;
+			start = current_index;
 		}
 	}
 

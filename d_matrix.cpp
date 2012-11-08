@@ -11,9 +11,9 @@ int d_matrix::get_initial_score(int row, int col) {
 	return 0;
 }
 
-void d_matrix::fill_in_cell(cell* current, cell* above, cell* left,	cell* above_left) {
-	int d_score = left->score + gap_extend;
-	int a_score = a_matrix->cells[current->row][current->col - 1].score + gap_open + gap_extend;
+void d_matrix::fill_in(int row, int col) {
+	int d_score = cells[row * max_size + (col - 1)] + gap_extend;
+	int a_score = a_matrix->cells[row * max_size + (col - 1)] + gap_open + gap_extend;
 
-	current->score = std::max(a_score, d_score);
+	cells[row * max_size + col] = std::max(a_score, d_score);
 }

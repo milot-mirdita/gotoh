@@ -8,8 +8,10 @@ public:
 		int gap_open, int gap_extend, matrix* d_matrix, matrix* i_matrix) 
 		: matrix(size, substitution, gap_open, gap_extend), d_matrix(d_matrix), i_matrix(i_matrix) {};
 
+	virtual void fill_in(int row, int col);
+
 	virtual std::pair<std::string, std::string> get_traceback();
-	virtual cell* get_traceback_start();
+	virtual int get_traceback_start();
 
 	friend class d_matrix;
 	friend class i_matrix;
@@ -18,10 +20,8 @@ protected:
 	int gap_cost(int k);
 
 	virtual int get_initial_score(int row, int col);
-	virtual cell* get_initial_pointer(int row, int col);
-	virtual void fill_in_cell(cell* current, cell* above, cell* left, cell* above_left);
 
-	virtual bool is_traceback_done(cell* current);
+	virtual bool is_traceback_done(int current);
 
 	matrix* d_matrix;
 	matrix* i_matrix;
