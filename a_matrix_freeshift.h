@@ -11,5 +11,6 @@ public:
 protected:
 	virtual int get_initial_score(int row, int col);
 	virtual int get_traceback_start();
+	virtual bool is_traceback_done(int current);
 };
 

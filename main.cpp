@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <map>
 #include <string>
 
@@ -53,20 +54,21 @@ int main(int argc, char* argv[]) {
  		std::string sequence2 = sequences.get_sequence(i->second);
 		runner.run(sequence1, sequence2);
 
+		std::cout.precision(3);
 		if(print_alignment_arg.getValue() == false) {
 			float score = runner.get_score();
-			std::cout << i->first << " " << i->second << " " << score << std::endl;
+			std::cout << i->first << " " << i->second << " " << std::fixed << score << std::endl;
 		} else {
 			auto alignment = runner.get_alignment();
-			std::cout << "> " << i->first << " " << i->second << " " << runner.get_score() << std::endl;
+			std::cout << "> " << i->first << " " << i->second << " " << std::fixed << runner.get_score() << std::endl;
 			std::cout << i->first << ": " << alignment.first << std::endl;
 			std::cout << i->second << ": " << alignment.second << std::endl;
 			if(check_arg.getValue()) {
 				float check_score = runner.get_score(alignment,  alignment_modes_arg.getValue());
 				if(check_score != runner.get_score()) {
-					std::cout << "check: false, score: " << check_score << std::endl;
+					std::cout << "check: false, score: " << std::fixed << check_score << std::endl;
 				} else {
-					std::cout << "check: true, score: " << check_score << std::endl;
+					std::cout << "check: true, score: " << std::fixed << check_score << std::endl;
 				}
 			}
 		}
