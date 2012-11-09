@@ -1,6 +1,7 @@
 #include "gotoh.h"
 #include "a_matrix_freeshift.h"
 #include "a_matrix_local.h"
+#include <cfloat>
 
 gotoh::gotoh(unsigned int size, int gap_open, int gap_extend, substitution_matrix* matrix, std::string alignment_type)
 	: size(size), gap_open(gap_open), gap_extend(gap_extend), matrix(matrix), alignment_type(alignment_type) {	

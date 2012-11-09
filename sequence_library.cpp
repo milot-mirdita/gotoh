@@ -17,6 +17,7 @@ sequence_library::sequence_library(std::string file) {
 }
 
 std::string sequence_library::get_sequence(std::string id) {
-	return sequences.find(id)->second;
+	std::string search(id);
+	return sequences.find(search)->second;
 }
 

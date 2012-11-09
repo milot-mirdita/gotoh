@@ -7,15 +7,16 @@ matrix::matrix(unsigned int size, substitution_matrix* substitution, int gap_ope
 	: max_size(size + 1), gap_open(gap_open), gap_extend(gap_extend), substitution(substitution), 
 	min_score(INT_MIN + std::abs(gap_open) + std::abs(gap_extend) + 1) {
 	cells = new int[max_size * max_size];
+	sequence1 = 0;
+	sequence2 = 0;
 }
 
 matrix::~matrix() {
 	delete[] cells;
-	delete cells;
-	delete[] sequence1;
-	delete sequence1;
-	delete[] sequence2;
-	delete sequence2;
+	if(this->sequence1)
+		delete[] sequence1;
+	if(this->sequence2)
+		delete[] sequence2;
 }
 
 void matrix::init() {
@@ -31,8 +32,13 @@ void matrix::initialize_scores() {
 void matrix::set_sequences(std::string sequence1, std::string sequence2) {
 // dont want to maintain a different version for vc++ and g++
 #pragma warning( disable : 4996 )
+	if(this->sequence1)
+		delete[] this->sequence1;
 	this->sequence1 = new char [sequence1.size()+1];
 	sequence1.copy(this->sequence1, sequence1.size()+1, 0);
+
+	if(this->sequence2)
+		delete[] this->sequence2;
 	this->sequence2 = new char [sequence2.size()+1];
 	sequence2.copy(this->sequence2, sequence2.size()+1, 0);
 
