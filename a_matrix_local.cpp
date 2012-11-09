@@ -9,7 +9,7 @@ void a_matrix_local::fill_in(int row, int col) {
 	int d_score = d_matrix->cells[current_index];
 	int i_score = i_matrix->cells[current_index];
 	int substitution_score = substitution->get_score(sequence1[row - 1], sequence2[col - 1]);
-	int a_score = cells[(row - 1) * max_size + (col - 1)] + substitution_score;
+	int a_score = cells[current_index - max_size - 1] + substitution_score;
 
 	int current_score = cells[current_index] = std::max(0, std::max(a_score, std::max(d_score, i_score)));
 

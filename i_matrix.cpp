@@ -13,8 +13,9 @@ int i_matrix::get_initial_score(int row, int col) {
 }
 
 void i_matrix::fill_in(int row, int col) {
-	int i_score = cells[(row - 1) * max_size + col] + gap_extend;
-	int a_score = a_matrix->cells[(row - 1) * max_size + col] + gap_open + gap_extend;
+	int last_index = (row - 1) * max_size + col;
+	int i_score = cells[last_index] + gap_extend;
+	int a_score = a_matrix->cells[last_index] + gap_open + gap_extend;
 
-	cells[row * max_size + col] = std::max(a_score, i_score);
+	cells[last_index + max_size] = std::max(a_score, i_score);
 }

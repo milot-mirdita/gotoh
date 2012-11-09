@@ -62,7 +62,7 @@ int main(int argc, char* argv[]) {
 			std::cout << i->first << ": " << alignment.first << std::endl;
 			std::cout << i->second << ": " << alignment.second << std::endl;
 			if(check_arg.getValue()) {
-				float check_score = runner.get_score(alignment);
+				float check_score = runner.get_score(alignment,  alignment_modes_arg.getValue());
 				if(check_score != runner.get_score()) {
 					std::cout << "check: false, score: " << check_score << std::endl;
 				} else {

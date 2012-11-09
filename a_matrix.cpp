@@ -22,7 +22,7 @@ void a_matrix::fill_in(int row, int col) {
 	int d_score = d_matrix->cells[current_index];
 	int i_score = i_matrix->cells[current_index];
 	int substitution_score = substitution->get_score(sequence1[row - 1], sequence2[col - 1]);
-	int a_score = cells[(row - 1) * max_size + (col - 1)] + substitution_score;
+	int a_score = cells[current_index - max_size - 1] + substitution_score;
 
 	cells[current_index] = std::max(a_score, std::max(d_score, i_score));
 }
@@ -32,74 +32,64 @@ std::pair<std::string, std::string> a_matrix::get_traceback() {
 	std::string alignment2;
 
 	int current = get_traceback_start();
+	int current_row = current / max_size;
+	int current_col = current % max_size;
+	int start_rows = rows - 1;
+	while(start_rows > current_row) {
+		alignment2.push_back(sequence1[start_rows - 1]);
+		alignment1.push_back('-');
+		start_rows--;
+	}
 
-	//int start_rows = rows - 1;
-	//while(start_rows > current->row) {
-	//	alignment2.push_back(sequence1[start_rows - 1]);
-	//	alignment1.push_back('-');
-	//	start_rows--;
-	//}
+	int start_cols = cols - 1;
+	while(start_cols > current_col) {
+		alignment1.push_back(sequence2[start_cols - 1]);
+		alignment2.push_back('-');
+		start_cols--;
+	}
 
-	//int start_cols = cols - 1;
-	//while(start_cols > current->col) {
-	//	alignment1.push_back(sequence2[start_cols - 1]);
-	//	alignment2.push_back('-');
-	//	start_cols--;
-	//}
-
-	/*while(is_traceback_done(current) == false) {
-		int delta_row = current->row - current->previous->row;
-		int delta_col = current->col - current->previous->col;
-		if (delta_row == 1 && delta_col == 1) {
-			alignment1.push_back(sequence2[current->col - 1]);
-			alignment2.push_back(sequence1[current->row - 1]);
-			current = current->previous;
-		} else if (delta_row == 1 && delta_col == 0) {
+	while(is_traceback_done(current) == false) {
+		current_row = current / max_size;
+		current_col = current % max_size;
+		int above_left_index = (current_row - 1) * max_size + (current_col - 1);
+		if ((current_row != 0 && current_col != 0) && cells[current] == cells[above_left_index] + substitution->get_score(sequence1[current_row -1], sequence2[current_col - 1])) {
+			alignment1.push_back(sequence2[current_col - 1]);
+			alignment2.push_back(sequence1[current_row - 1]);
+			current = above_left_index;
+		} else if (cells[current] == i_matrix->cells[current]) {
 			int counter = 0;
-			cell* temp = 0;
-			cell* afine = current->previous;
-            do {
-                alignment2.push_back(sequence1[afine->row - 1]);
-				alignment1.push_back('-');
-				temp = afine;
-				cell* temp = afine;
-                afine = afine->previous;
-				if(is_traceback_done(afine))
-					break;
-
+            do{
+                alignment1.push_back('-');
+				alignment2.push_back(sequence1[current_row - counter - 1]);
 				counter++;
-			} while (current->score != temp->score + gap_open + (counter - 1) * gap_extend );   
-            current = afine;
-		} else if (delta_row == 0 && delta_col == 1) {
+            } while (cells[current] != 
+					 cells[(current_row - counter) * max_size + current_col] + gap_cost(counter));   
+			current -= counter * max_size;
+		} else if (cells[current] == d_matrix->cells[current]) {
 			int counter = 0;
-			cell* temp = 0;
-			cell* afine = current->previous;
-            do {
-				alignment1.push_back(sequence2[afine->col - 1]);
+            do{
+				alignment1.push_back(sequence2[current_col - counter - 1]);
 				alignment2.push_back('-');
-				temp = afine;
-                afine = afine->previous;
-				if(is_traceback_done(afine))
-					break;
 				counter++;
-			} while (current->score != temp->score + gap_open + (counter - 1) * gap_extend );   
-            current = afine;
+            } while (cells[current] != 
+					 cells[current_row * max_size + (current_col - counter)] + gap_cost(counter));   
+            current -= counter;
 		}
-	}*/
+	}
 
-	//int remaining_rows = current->row;
-	//while(remaining_rows > 0) {
-	//	alignment2.push_back(sequence1[remaining_rows - 1]);
-	//	alignment1.push_back('-');
-	//	remaining_rows--;
-	//}
+	int remaining_rows = current / max_size;
+	while(remaining_rows > 0) {
+		alignment2.push_back(sequence1[remaining_rows - 1]);
+		alignment1.push_back('-');
+		remaining_rows--;
+	}
 
-	//int remaining_cols = current->col;
-	//while(remaining_cols > 0) {
-	//	alignment1.push_back(sequence2[remaining_cols - 1]);
-	//	alignment2.push_back('-');
-	//	remaining_cols--;
-	//}
+	int remaining_cols = current % max_size;
+	while(remaining_cols > 0) {
+		alignment1.push_back(sequence2[remaining_cols - 1]);
+		alignment2.push_back('-');
+		remaining_cols--;
+	}
 
 	std::string reverse_alignment1(alignment1);
 	std::reverse(reverse_alignment1.begin(), reverse_alignment1.end());

@@ -52,25 +52,41 @@ float gotoh::get_score() {
 	return (float) am->cells[score_cell] / matrix->scale_factor;
 }
 
-float gotoh::get_score(std::pair<std::string, std::string> alignment) {
+float gotoh::get_score(std::pair<std::string, std::string> alignment, std::string type) {
 	std::string sequence1 = alignment.first;
 	std::string sequence2 = alignment.second;
+
 	if(sequence1.length() != sequence2.length())
 		return -FLT_MAX;
+
+	unsigned int start = 0;
+	unsigned int end = sequence1.length();
+	if(type.find("local") != std::string::npos || type.find("freeshift") != std::string::npos) {
+		bool found_first = false;
+		for(unsigned int i = 0; i < sequence1.length(); i++) {
+			if(sequence1.at(i) != '-' && sequence2.at(i) != '-') {
+				if(!found_first) {
+					start = i;
+					found_first = true;
+				}
+				end = i + 1;
+			}
+		}
+	}
 	
 	int score = 0;
 	bool is_gap_open = false;
-	for(unsigned int i = 0; i < sequence1.length(); i++) {
+	for(unsigned int i = start; i < end; i++) {
 		if(sequence1.at(i) == '-' || sequence2.at(i) == '-') {
 			if(is_gap_open) {
 				score += gap_extend;
 			} else {
-				score += gap_open;
+				score += gap_open + gap_extend;
 				is_gap_open = true;
 			}
 			continue;
 		}
-		score += matrix->get_score(sequence1.at(i), sequence2.at(i));
+		score +=  matrix->get_score(sequence1.at(i), sequence2.at(i));
 		is_gap_open = false;
 	}
 	

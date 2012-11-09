@@ -25,7 +25,7 @@ public:
 	void run(std::string sequence1, std::string sequence2);
 	void print_matrices(std::string type);
 	std::pair<std::string, std::string> get_alignment();
-	float get_score(std::pair<std::string, std::string> alignment);
+	float get_score(std::pair<std::string, std::string> alignment, std::string type);
 	float get_score();
 };
 
