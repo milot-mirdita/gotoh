@@ -8,8 +8,7 @@ private:
 
 public:
 	i_matrix(unsigned int size, substitution_matrix* substitution, int gap_open, int gap_extend) 
-		: matrix(size, substitution, gap_open, gap_extend) {
-	};
+		: matrix(size, substitution, gap_open, gap_extend) {};
 
 	void set_a_matrix(matrix* a_matrix);
 	friend class a_matrix;

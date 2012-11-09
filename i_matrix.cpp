@@ -1,6 +1,5 @@
-#include <climits>
-#include <cstdlib>
 #include "i_matrix.h"
+#include <algorithm>
 
 void i_matrix::set_a_matrix(matrix* a) {
 	a_matrix = a;

@@ -1,4 +1,5 @@
 #include "d_matrix.h"
+#include <algorithm>
 
 void d_matrix::set_a_matrix(matrix* a) {
 	a_matrix = a;
