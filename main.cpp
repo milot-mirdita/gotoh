@@ -3,6 +3,8 @@
 #include <map>
 #include <string>
 
+#define TCLAP_FLAGSTARTSTRING "-"
+#define TCLAP_NAMESTARTSTRING "-"
 #include <tclap/CmdLine.h>
 
 #include "substitution_matrix.h"
@@ -14,7 +16,7 @@
 
 int main(int argc, char* argv[]) {
 #if !SINGLE_RUN
-	TCLAP::CmdLine cmd("Gotoh", '=', "0.01" );
+	TCLAP::CmdLine cmd("Gotoh", ' ', "0.01" );
 	TCLAP::ValueArg<float> gap_open_arg("o", "gap-open", "gap open score (Standard -12)", false, -12.0f, "int", cmd);
 	TCLAP::ValueArg<float> gap_extend_arg("e", "gap-extend", "gap extend score (Standard -1)", false, -1.0f, "int", cmd);
 
