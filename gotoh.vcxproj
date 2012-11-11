@@ -192,28 +192,38 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="amino_acid_lookup.h" />
     <ClInclude Include="a_matrix.h" />
     <ClInclude Include="a_matrix_freeshift.h" />
     <ClInclude Include="a_matrix_local.h" />
+    <ClInclude Include="contact_preferences.h" />
     <ClInclude Include="d_matrix.h" />
     <ClInclude Include="gotoh.h" />
     <ClInclude Include="i_matrix.h" />
     <ClInclude Include="matrix.h" />
+    <ClInclude Include="config_123d.h" />
     <ClInclude Include="pairs_library.h" />
+    <ClInclude Include="secondary_structure_contacts.h" />
+    <ClInclude Include="secondary_structure_preference.h" />
     <ClInclude Include="sequence_library.h" />
     <ClInclude Include="substitution_matrix.h" />
     <ClInclude Include="util.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="amino_acid_lookup.cpp" />
     <ClCompile Include="a_matrix.cpp" />
     <ClCompile Include="a_matrix_freeshift.cpp" />
     <ClCompile Include="a_matrix_local.cpp" />
+    <ClCompile Include="contact_preferences.cpp" />
     <ClCompile Include="d_matrix.cpp" />
     <ClCompile Include="gotoh.cpp" />
     <ClCompile Include="i_matrix.cpp" />
     <ClCompile Include="matrix.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="config_123d.cpp" />
     <ClCompile Include="pairs_library.cpp" />
+    <ClCompile Include="secondary_structure_contacts.cpp" />
+    <ClCompile Include="secondary_structure_preference.cpp" />
     <ClCompile Include="sequence_library.cpp" />
     <ClCompile Include="substitution_matrix.cpp" />
     <ClCompile Include="util.cpp" />

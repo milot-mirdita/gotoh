@@ -63,6 +63,15 @@
     <ClInclude Include="util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="secondary_structure_preference.h">
+      <Filter>Header Files\parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="amino_acid_lookup.h">
+      <Filter>Header Files\parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="secondary_structure_contacts.h">
+      <Filter>Header Files\parsers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -100,6 +109,15 @@
     </ClCompile>
     <ClCompile Include="util.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="secondary_structure_preference.cpp">
+      <Filter>Source Files\parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="amino_acid_lookup.cpp">
+      <Filter>Source Files\parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="secondary_structure_contacts.cpp">
+      <Filter>Source Files\parsers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
