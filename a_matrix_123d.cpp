@@ -2,15 +2,6 @@
 
 
 int a_matrix_123d::get_initial_score(int row, int col) {
-	if(row == 0 && col == 0) {
-		return 0;
-	} else if(row == 0 && col  > 0) {
-		return gap_open * config->scores[1][2] + gap_extend * config->scores[2][2] * col;
-	} else if(row >  0 && col == 0) {
-		unsigned char ss = entries->secondary_structure[row - 1];
-		return gap_open * config->scores[1][ss] + gap_extend * config->scores[2][ss] * row;
-	}
-
 	return 0;
 }
 
@@ -149,17 +140,21 @@ void a_matrix_123d::init( void )
 void a_matrix_123d::set_sscc( sscc_entries* sscc )
 {
 	this->entries = sscc;
-	initialize_scores();
 
-	for (unsigned int i = 0; i < max_size * max_size; i++) {
-		int row = i / max_size;
-		int col = i % max_size;
+	unsigned char ss = entries->secondary_structure[0];
+	int current_gap_extend = 0;
+	int current_gap_open = gap_open * config->scores[1][ss];
+	for(unsigned int i = 1; i < rows; i++) {
+		ss = entries->secondary_structure[i - 1];
+		current_gap_extend += gap_extend * config->scores[2][ss];
+		cells[i * max_size] = current_gap_open + current_gap_extend;
+		i_matrix->cells[i * max_size] = current_gap_open + current_gap_extend;
+		d_matrix->cells[i * max_size] = min_score;
+	}
 
-		if(row == 0 && col  > 0) {
-			d_matrix->cells[i] = gap_open * config->scores[1][2] + gap_extend * config->scores[2][2] * col;
-		} else if(row >  0 && col == 0) {
-			unsigned char ss = entries->secondary_structure[row - 1];
-			i_matrix->cells[i] = gap_open * config->scores[1][ss] + gap_extend * config->scores[2][ss] * row;
-		}
+	for(unsigned int i = 1; i < cols; i++) {
+		cells[i] = gap_open * config->scores[1][2] + gap_extend * config->scores[2][2] * i;
+		d_matrix->cells[i] = gap_open * config->scores[1][2] + gap_extend * config->scores[2][2] * i;
+		i_matrix->cells[i] = min_score;
 	}
 }

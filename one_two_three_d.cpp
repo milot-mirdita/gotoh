@@ -12,14 +12,16 @@ one_two_three_d::one_two_three_d(unsigned int size, int gap_open, int gap_extend
 
 	if(alignment_type.find("local") != std::string::npos) {
 		am = new a_matrix_123d_local(size, matrix, gap_open, gap_extend, dm, im, config, contact_pref, secondary_pref);
+		dm->init();
+		im->init();
 	} else if (alignment_type.find("freeshift") != std::string::npos) {
 		am = new a_matrix_123d_freeshift(size, matrix, gap_open, gap_extend, dm, im, config, contact_pref, secondary_pref);
+		dm->init();
+		im->init();
 	} else if (alignment_type.find("global") != std::string::npos) {
 		am = new a_matrix_123d(size, matrix, gap_open, gap_extend, dm, im, config, contact_pref, secondary_pref);
 	}
 
-	dm->init();
-	im->init();
 	am->init();
 
 	dm->set_a_matrix(am);

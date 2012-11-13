@@ -105,8 +105,8 @@ void gotoh::print_matrices(std::string type = "txt") {
 		im->print();
 		am->print();
 	} else if (type.find("html") != std::string::npos) {
+		am->print_html();
 		dm->print_html();
 		im->print_html();
-		am->print_html();
 	}
 }

@@ -24,8 +24,11 @@ void matrix::init() {
 }
 
 void matrix::initialize_scores() {
-	for (unsigned int i = 0; i < max_size * max_size; i++) {
-		cells[i] = get_initial_score(i / max_size, i % max_size);
+	for (unsigned int i = 0; i < max_size; i++) {
+		cells[i * max_size] = get_initial_score(i, 0);
+	}
+	for (unsigned int i = 0; i < max_size; i++) {
+		cells[i] = get_initial_score(0, i);
 	}
 }
 
@@ -68,8 +71,8 @@ void matrix::print() {
 	std::cout << std::endl;	 
 }
 
-void matrix::print_html() {
-	std::cout << "<table>" << std::endl;
+void matrix::print_html() { 
+	std::cout << "<table border=\"1\">" << std::endl;
 	std::cout << "<thead><tr><td></td><td></td>" << std::endl;
 	for(int i = 1; i < cols; i++) {
 		std::cout << "<th>" << sequence2[i - 1] << "</th>" << std::endl;
