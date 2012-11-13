@@ -12,10 +12,7 @@
 #include "sequence_library.h"
 #include "pairs_library.h"
 
-#define SINGLE_RUN 0
-
 int main(int argc, char* argv[]) {
-#if !SINGLE_RUN
 	TCLAP::CmdLine cmd("Gotoh", ' ', "0.01" );
 	TCLAP::ValueArg<float> gap_open_arg("o", "gap-open", "gap open score (Standard -12)", false, -12.0f, "int", cmd);
 	TCLAP::ValueArg<float> gap_extend_arg("e", "gap-extend", "gap extend score (Standard -1)", false, -1.0f, "int", cmd);
@@ -37,7 +34,7 @@ int main(int argc, char* argv[]) {
 	TCLAP::ValuesConstraint<std::string> output_type_constraint( output_types );
 	TCLAP::ValueArg<std::string> print_matrices_arg("t", "printmatrices", "eines aus txt|html, gibt auch die Gotoh-Matrizen aus, entweder als tab separiert oder html", false, "none", &output_type_constraint, cmd);
 
-	TCLAP::ValueArg<std::string> substitution_matrix_arg("m", "matrix", "matrix", true, "dayhoff", "string", cmd);
+	TCLAP::ValueArg<std::string> substitution_matrix_arg("m", "matrix", "matrix", false, "matrices/dayhoff.mat", "string", cmd);
 	TCLAP::ValueArg<std::string> sequence_library_arg("s", "seqlib", "Name to print", true, "", "string", cmd);
 	TCLAP::ValueArg<std::string> pairs_libarary_arg("p", "pairs","Name to print", true, "", "string", cmd);
 	cmd.parse( argc, argv );
@@ -79,14 +76,6 @@ int main(int argc, char* argv[]) {
 			runner.print_matrices(print_matrices_arg.getValue());
 		}
 	}
-#else
-	substitution_matrix matrix("C:\\Users\\Milot\\Documents\\Visual Studio 2010\\Projects\\gotoh\\Debug\\matrices\\dayhoff.mat", 10.0f);
-	gotoh runner(250, -120, -10, &matrix, "global");
-	runner.run("GPLDVQVTE", "MEEAKQKVV");
-	auto result = runner.get_alignment();
-	std::cout << runner.get_score() << std::endl;
-	runner.print_matrices("txt");
-	system("pause");
-#endif
+
 	return 0;
 }
