@@ -37,5 +37,10 @@ void one_two_three_d::set_sscc( sscc_entries* sscc )
 
 float one_two_three_d::get_score() {
 	int score_cell = am->get_traceback_start();
-	return (float) am->cells[score_cell] / 1000000;
+#ifdef ONETWOTHREED
+float scale = 10000.0f;
+#else
+float scale = matrix->scale_factor;
+#endif
+	return (float) am->cells[score_cell] /  scale;
 }

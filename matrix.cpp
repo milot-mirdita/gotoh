@@ -50,6 +50,12 @@ void matrix::set_sequences(std::string sequence1, std::string sequence2) {
 }
 
 void matrix::print() {
+#ifdef ONETWOTHREED
+	float scale = 10000.0f;
+#else
+	float scale = matrix->scale_factor;
+#endif
+
 	std::cout << " \t \t";
 	for(int i = 1; i < cols; i++) {
 		std::cout << sequence2[i - 1] << '\t';
@@ -64,7 +70,7 @@ void matrix::print() {
 			std::cout << sequence1[i - 1] << '\t';
 		}
 		for (int j = 0; j < cols; j++) {
-			std::cout << cells[i * max_size + j] / substitution->scale_factor << '\t';
+			std::cout << cells[i * max_size + j] / scale << '\t';
 		}
 		std::cout << std::endl;
 	}
@@ -72,6 +78,12 @@ void matrix::print() {
 }
 
 void matrix::print_html() { 
+#ifdef ONETWOTHREED
+	float scale = 10000.0f;
+#else
+	float scale = matrix->scale_factor;
+#endif
+
 	std::cout << "<table border=\"1\">" << std::endl;
 	std::cout << "<thead><tr><td></td><td></td>" << std::endl;
 	for(int i = 1; i < cols; i++) {
@@ -88,7 +100,7 @@ void matrix::print_html() {
 			std::cout << "<td>" << sequence1[i - 1] << "</td>" << std::endl;
 		}
 		for (int j = 0; j < cols; j++) {
-			std::cout << "<td>" << cells[i * max_size + j] / 10000.0f << "</td>" << std::endl;
+			std::cout << "<td>" << cells[i * max_size + j] / scale << "</td>" << std::endl;
 		}
 		std::cout << "</tr>" << std::endl;
 		std::cout << "</tbody>" << std::endl;

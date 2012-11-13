@@ -58,7 +58,7 @@ int run_onetwothreed(int argc, char* argv[]) {
 	TCLAP::ValueArg<std::string> config_123d_arg("1", "123d", "Konfigurationsdatei für 123D", false, "123d_standard.config", "string", cmd);
 
 
-	TCLAP::ValueArg<std::string> substitution_matrix_arg("m", "matrix", "matrix", true, "matrices/dayhoff.mat", "string", cmd);
+	TCLAP::ValueArg<std::string> substitution_matrix_arg("m", "matrix", "matrix", false, "matrices/dayhoff.mat", "string", cmd);
 	TCLAP::ValueArg<std::string> sequence_library_arg("s", "seqlib", "Name to print", true, "", "string", cmd);
 	TCLAP::ValueArg<std::string> pairs_libarary_arg("p", "pairs","Name to print", true, "", "string", cmd);
 	cmd.parse( argc, argv );
@@ -149,7 +149,7 @@ int run_gotoh(int argc, char* argv[]) {
 	TCLAP::ValuesConstraint<std::string> output_type_constraint( output_types );
 	TCLAP::ValueArg<std::string> print_matrices_arg("t", "printmatrices", "eines aus txt|html, gibt auch die Gotoh-Matrizen aus, entweder als tab separiert oder html", false, "none", &output_type_constraint, cmd);
 
-	TCLAP::ValueArg<std::string> substitution_matrix_arg("m", "matrix", "matrix", true, "matrices/dayhoff.mat", "string", cmd);
+	TCLAP::ValueArg<std::string> substitution_matrix_arg("m", "matrix", "matrix", false, "matrices/dayhoff.mat", "string", cmd);
 	TCLAP::ValueArg<std::string> sequence_library_arg("s", "seqlib", "Name to print", true, "", "string", cmd);
 	TCLAP::ValueArg<std::string> pairs_libarary_arg("p", "pairs","Name to print", true, "", "string", cmd);
 	cmd.parse( argc, argv );
