@@ -25,6 +25,12 @@
     <Filter Include="Header Files\parsers">
       <UniqueIdentifier>{cbc53ea4-7138-4d12-9f8e-c53f67410287}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\123d">
+      <UniqueIdentifier>{a3089ff0-6369-44cc-87cd-c8407609bac4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\123d">
+      <UniqueIdentifier>{9f29ad32-6024-43e2-ad71-562b49c9a03e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -72,6 +78,30 @@
     <ClInclude Include="secondary_structure_contacts.h">
       <Filter>Header Files\parsers</Filter>
     </ClInclude>
+    <ClInclude Include="one_two_three_d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="a_matrix_123d.h">
+      <Filter>Header Files\123d</Filter>
+    </ClInclude>
+    <ClInclude Include="a_matrix_123d_freeshift.h">
+      <Filter>Header Files\123d</Filter>
+    </ClInclude>
+    <ClInclude Include="a_matrix_123d_local.h">
+      <Filter>Header Files\123d</Filter>
+    </ClInclude>
+    <ClInclude Include="d_matrix_123d.h">
+      <Filter>Header Files\123d</Filter>
+    </ClInclude>
+    <ClInclude Include="i_matrix_123d.h">
+      <Filter>Header Files\123d</Filter>
+    </ClInclude>
+    <ClInclude Include="config_123d.h">
+      <Filter>Header Files\parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="contact_preferences.h">
+      <Filter>Header Files\parsers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -117,6 +147,30 @@
       <Filter>Source Files\parsers</Filter>
     </ClCompile>
     <ClCompile Include="secondary_structure_contacts.cpp">
+      <Filter>Source Files\parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="one_two_three_d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="a_matrix_123d.cpp">
+      <Filter>Source Files\123d</Filter>
+    </ClCompile>
+    <ClCompile Include="a_matrix_123d_freeshift.cpp">
+      <Filter>Source Files\123d</Filter>
+    </ClCompile>
+    <ClCompile Include="config_123d.cpp">
+      <Filter>Source Files\parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="a_matrix_123d_local.cpp">
+      <Filter>Source Files\123d</Filter>
+    </ClCompile>
+    <ClCompile Include="d_matrix_123d.cpp">
+      <Filter>Source Files\123d</Filter>
+    </ClCompile>
+    <ClCompile Include="i_matrix_123d.cpp">
+      <Filter>Source Files\123d</Filter>
+    </ClCompile>
+    <ClCompile Include="contact_preferences.cpp">
       <Filter>Source Files\parsers</Filter>
     </ClCompile>
   </ItemGroup>

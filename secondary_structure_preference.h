@@ -8,7 +8,7 @@ public:
 	~secondary_structure_preference(void);
 
 	inline int get_score(int secondary_structure, unsigned char residue) {
-		return scores[secondary_structure][residue - 65];
+		return scores[secondary_structure][residue];
 	}
 
 protected:

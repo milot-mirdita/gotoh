@@ -13,7 +13,7 @@ secondary_structure_preference::secondary_structure_preference(std::string file,
 		if(currentType >= 0 && currentType < 3) {
 			std::stringstream sstream;
 			std::string three_letter_code;
-			float preference;
+			double preference;
 
 			sstream << line;
 			sstream >> three_letter_code;

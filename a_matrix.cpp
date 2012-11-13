@@ -2,7 +2,7 @@
 #include <algorithm>
 
 int a_matrix::gap_cost(int k) {
-	return this->gap_open + this->gap_extend * k;
+	return gap_open + gap_extend * k;
 }
 
 int a_matrix::get_initial_score(int row, int col) {
@@ -58,22 +58,22 @@ std::pair<std::string, std::string> a_matrix::get_traceback() {
 			current = above_left_index;
 		} else if (cells[current] == i_matrix->cells[current]) {
 			int counter = 0;
-            do {
-                alignment1.push_back('-');
+			do {
+				alignment1.push_back('-');
 				alignment2.push_back(sequence1[current_row - counter - 1]);
 				counter++;
-            } while (cells[current] != 
+			} while (cells[current] != 
 					 cells[(current_row - counter) * max_size + current_col] + gap_cost(counter));   
 			current -= counter * max_size;
 		} else if (cells[current] == d_matrix->cells[current]) {
 			int counter = 0;
-            do {
+			do {
 				alignment1.push_back(sequence2[current_col - counter - 1]);
 				alignment2.push_back('-');
 				counter++;
-            } while (cells[current] != 
+			} while (cells[current] != 
 					 cells[current_row * max_size + (current_col - counter)] + gap_cost(counter));   
-            current -= counter;
+			current -= counter;
 		}
 	}
 

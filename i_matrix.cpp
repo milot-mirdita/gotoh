@@ -6,7 +6,7 @@ void i_matrix::set_a_matrix(matrix* a) {
 }
 
 int i_matrix::get_initial_score(int row, int col) {
-	if(row == 0)
+	if(row == 0 && col != 0)
 		return min_score;
 	
 	return 0;

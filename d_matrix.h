@@ -3,7 +3,7 @@
 
 class d_matrix : public matrix
 {
-private:
+protected:
 	matrix* a_matrix;
 
 public:

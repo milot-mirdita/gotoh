@@ -1,5 +1,6 @@
 #pragma once
 #include "substitution_matrix.h"
+#include "secondary_structure_contacts.h"
 #include <string>
 
 class matrix {
@@ -7,9 +8,10 @@ public:
 	matrix(unsigned int size, substitution_matrix* substitution, int gap_open, int gap_extend);
 	~matrix();
 
-	void init(void);
+	virtual void init(void);
 
 	virtual void set_sequences(std::string sequence1, std::string sequence2);
+	virtual void set_sscc(sscc_entries* sscc) {}
 	virtual void fill_in(int row, int col) = 0;
 
 	virtual std::pair<std::string, std::string> get_traceback() = 0;
@@ -39,5 +41,5 @@ protected:
 
 	substitution_matrix* substitution;
 
-	const int min_score;
+	int min_score;
 };

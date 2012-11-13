@@ -9,11 +9,13 @@ void secondary_structure_contacts::parse_file(std::string file) {
 	std::ifstream in(file);
 	std::string line;
 	int current_line = 0;
+	std::getline(in, line);
 	while(std::getline(in, line)) {
 		std::stringstream sstream;
 
 		std::string three_letter_code;
-		unsigned char secondary_structure;
+		std::string secondary_structure;
+		unsigned char ss_struct;
 		int global_contacts;
 		int local_contacts;
 
@@ -23,10 +25,16 @@ void secondary_structure_contacts::parse_file(std::string file) {
 		sstream >> global_contacts;
 		sstream >> local_contacts;
 
-		secondary_structure -= 97; 
+		if(secondary_structure.at(0) == 'a') {
+			ss_struct = 0;
+		} else if (secondary_structure.at(0)  == 'b') {
+			ss_struct = 1;
+		} else {
+			ss_struct = 2;
+		}
 		//unsigned char one_letter_code = (unsigned char) amino_acid_lookup::find_one_letter_code(three_letter_code) - 65;
 			
-		entries.secondary_structure[current_line]	= secondary_structure;
+		entries.secondary_structure[current_line]	= ss_struct;
 		entries.global_contacts[current_line]		= global_contacts;
 		entries.local_contacts[current_line]		= local_contacts;
 

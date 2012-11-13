@@ -13,7 +13,6 @@
 #include <sstream>
 #include <vector>
 
-
 //        0     1     2     3     4     5     6     7     8     9    10    11    12    13 
 //ALA   -20     4    -8   -65   -91   -97   -96   -96   -96   -96   -96   -96   -96   -96 
 //CYS   198    91    27   -25   -70   -53   -92   -72   -82   -77   -79   -78   -79   -78 
@@ -43,74 +42,73 @@
 contact_preferences::~contact_preferences(void) {		
 	for(int i = 0; i < rows; i++) {
 		delete h_scores[i];
-        delete s_scores[i];
-        delete l_scores[i];
+		delete s_scores[i];
+		delete l_scores[i];
 
 	}
 	delete h_scores;
-    delete s_scores;
+	delete s_scores;
 	delete l_scores;
 
+	delete[] matrix_lookup;
 }
 
 
-contact_preferences::contact_preferences(std::string helix,std::string sheet,std::string loop)
-{
-
+contact_preferences::contact_preferences(std::string helix, std::string sheet, std::string loop, float scale_factor) {
+	this->scale_factor = scale_factor;
 	current_row_index = 0;
-    std::string files_to_process[]={helix,sheet,loop};
-    int *** matrix_lookup = new int**[3];
-    rows = 26;
+	std::string files_to_process[]={helix,sheet,loop};
+	matrix_lookup = new int**[3];
+	rows = 26;
 
-    h_scores = new int*[rows];
-    s_scores = new int*[rows];
-    l_scores = new int*[rows];
-    matrix_lookup[0]=h_scores;
-    matrix_lookup[1]=s_scores;
-    matrix_lookup[2]=l_scores;
+	h_scores = new int*[rows];
+	s_scores = new int*[rows];
+	l_scores = new int*[rows];
+	matrix_lookup[0]=h_scores;
+	matrix_lookup[1]=s_scores;
+	matrix_lookup[2]=l_scores;
 
-    for(size_t i = 0 ; i < 3;i++){
-        int ** scores = matrix_lookup[i];
-        std::string file=files_to_process[i];
-        std::ifstream in(file.c_str());
-        std::string line;
+	for(size_t i = 0 ; i < 3;i++){
+		int ** scores = matrix_lookup[i];
+		std::string file=files_to_process[i];
+		std::ifstream in(file.c_str());
+		std::string line;
 
-        // first line
-        std::getline(in, line);
-        int int_last_index=0;
-        std::vector<std::string> first_line= split(line,' ');
-        std::string last_index_string=first_line.at(first_line.size()-1);
-        std::stringstream parse;
-        parse << last_index_string;
-        parse >> int_last_index;
-        cols = int_last_index+1;
-        
-        
-        for(int i = 0; i < rows; i++) {
-            scores[i] = new int[cols];
-            for(int j = 0; j < cols; j++) {
-                scores[i][j] = 0.0;
-            }
-        }	
-        while(std::getline(in, line)) {
-            
-            if(line.length() > 0)
-            {
-                if(line.at(0) == '#'||line.at(0) == '-') {
-                    continue;
-                }
-                std::stringstream into;
-                into << line;
-                std::string aa_name;
-                into >> aa_name;
-                int aa_index=amino_acid_lookup::find_one_letter_code(aa_name)-65;
-                int value;
-                for(int col = 0; col < cols; col++) {
-                    into >> value;
-                    scores[aa_index][col]=value;
-                }
-            }
-        }
-    }
-    
+		// first line
+		std::getline(in, line);
+		int int_last_index=0;
+		std::vector<std::string> first_line = split(line,' ');
+		std::string last_index_string=first_line.at(first_line.size()-1);
+		std::stringstream parse;
+		parse << last_index_string;
+		parse >> int_last_index;
+		cols = int_last_index+1;
+		
+		
+		for(int i = 0; i < rows; i++) {
+			scores[i] = new int[cols];
+			for(int j = 0; j < cols; j++) {
+				scores[i][j] = 0;
+			}
+		}	
+		while(std::getline(in, line)) {
+			
+			if(line.length() > 0)
+			{
+				if(line.at(0) == '#'||line.at(0) == '-') {
+					continue;
+				}
+				std::stringstream into;
+				into << line;
+				std::string aa_name;
+				into >> aa_name;
+				int aa_index=amino_acid_lookup::find_one_letter_code(aa_name)-65;
+				int value;
+				for(int col = 0; col < cols; col++) {
+					into >> value;
+					scores[aa_index][col] = (int)(value * scale_factor);
+				}
+			}
+		}
+	}
 }

@@ -30,16 +30,18 @@ gotoh::~gotoh() {
 	delete dm;
 }
 
-void gotoh::run(std::string sequence1, std::string sequence2) {
+void gotoh::set_sequences(std::string sequence1, std::string sequence2) {
 	dm->set_sequences(sequence1, sequence2);
 	im->set_sequences(sequence1, sequence2);
 	am->set_sequences(sequence1, sequence2);
+}
 
+void gotoh::run() {
 	for(int i = 0; i < am->rows; i++) {
 		for(int j = 0; j < am->cols; j++) {
-			if(j != 0)
+			if(j != 0 && i > 0)
 				dm->fill_in(i, j);
-			if(i != 0)
+			if(i != 0 && j > 0)
 				im->fill_in(i, j);
 			if(i != 0 && j != 0)
 				am->fill_in(i, j);

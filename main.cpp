@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <map>
 #include <string>
+#include <fstream>
 
 #define TCLAP_NAMESTARTSTRING "-"
 #define TCLAP_FLAGSTARTSTRING "-"
@@ -15,16 +16,25 @@
 #include "secondary_structure_contacts.h"
 #include "config_123d.h"
 #include "contact_preferences.h"
+#include "one_two_three_d.h"
 
-#define ONETWOTHREED 1
+bool check_file(std::string file) {
+	std::ifstream checkstream;
+	checkstream.open(file);
+	if (!checkstream.good()) {
+		checkstream.close();
+		return false;
+	}
+	checkstream.close();
+	return true;
+}
 
 int run_onetwothreed(int argc, char* argv[]) {
 	TCLAP::CmdLine cmd("Gotoh", ' ', "0.01" );
-	TCLAP::ValueArg<float> gap_open_arg("o", "gap-open", "gap open score (Standard -12)", false, -12.0f, "int", cmd);
-	TCLAP::ValueArg<float> gap_extend_arg("e", "gap-extend", "gap extend score (Standard -1)", false, -1.0f, "int", cmd);
+	TCLAP::ValueArg<float> gap_open_arg("o", "gap-open", "gap open score (Standard -15)", false, -15.0f, "int", cmd);
+	TCLAP::ValueArg<float> gap_extend_arg("e", "gap-extend", "gap extend score (Standard -3)", false, -3.0f, "int", cmd);
 
 	TCLAP::SwitchArg print_alignment_arg("a", "printali","gibt auch jedes Alignment aus", cmd, false);
-	TCLAP::SwitchArg check_arg("c", "check","ueberprueft die berechneten Scores anhand des Alignments", cmd, false);
 
 	std::vector<std::string> alignment_modes;
 	alignment_modes.push_back("local");
@@ -53,7 +63,7 @@ int run_onetwothreed(int argc, char* argv[]) {
 	TCLAP::ValueArg<std::string> pairs_libarary_arg("p", "pairs","Name to print", true, "", "string", cmd);
 	cmd.parse( argc, argv );
 
-	float scale_factor = 10.0f;
+	float scale_factor = 100.0f;
 	int gap_open = (int) (gap_open_arg.getValue() * scale_factor);
 	int gap_extend = (int) (gap_extend_arg.getValue() * scale_factor);
 
@@ -62,17 +72,41 @@ int run_onetwothreed(int argc, char* argv[]) {
 	pairs_library pairs(pairs_libarary_arg.getValue());
 	substitution_matrix matrix(substitution_matrix_arg.getValue(), scale_factor);
 	
-	config_123d config(config_123d_arg.getValue());
-	contact_preferences contacts(ccpa_file_arg.getValue(), ccpb_file_arg.getValue(), ccpo_file_arg.getValue());
-	secondary_structure_preference preference(pss_file_arg.getValue(), 10.0f);
+	config_123d config(config_123d_arg.getValue(), scale_factor);
+	contact_preferences contacts(ccpa_file_arg.getValue(), ccpb_file_arg.getValue(), ccpo_file_arg.getValue(), scale_factor);
+	secondary_structure_preference preference(pss_file_arg.getValue(), scale_factor);
 	secondary_structure_contacts sscc(sequences.max_length);
 
-	gotoh runner(sequences.max_length, gap_open, gap_extend, &matrix, alignment_modes_arg.getValue());
+	
+	if(!check_file(config_123d_arg.getValue())) {
+		std::cerr << "Config file not found! Aborting!" << std::endl;
+		return 1;
+	}
+
+	if(!check_file(ccpa_file_arg.getValue()) || !check_file(ccpb_file_arg.getValue()) ||  !check_file(ccpo_file_arg.getValue())) {
+		std::cerr << "Contact preference files not found! Aborting!" << std::endl;
+		return 1;
+	}
+
+	if(!check_file(pss_file_arg.getValue())) {
+		std::cerr << "Structure preferences not found! Aborting!" << std::endl;
+		return 1;
+	}
+	
+	one_two_three_d runner(sequences.max_length, gap_open, gap_extend, &matrix, alignment_modes_arg.getValue(), &config, &contacts, &preference);
 	for(auto i = pairs.pairs.begin(); i != pairs.pairs.end(); i++) {
-		sscc.parse_file(sscc_path_arg.getValue() + i->first + ".sscc");
+		std::string sscc_file = sscc_path_arg.getValue() + "/" + i->first + ".sscc";
+		if(!check_file(sscc_file)) {
+			std::cerr << "File " << sscc_file << " was not found. Skipped." << std::endl;
+			continue;
+		}
+		sscc.parse_file(sscc_file);
+
 		std::string sequence1 = sequences.get_sequence(i->first);
 		std::string sequence2 = sequences.get_sequence(i->second);
-		runner.run(sequence1, sequence2);
+		runner.set_sequences(sequence1, sequence2);
+		runner.set_sscc(&sscc.entries);
+		runner.run();
 
 		std::cout.precision(3);
 		if(print_alignment_arg.getValue() == false) {
@@ -83,14 +117,6 @@ int run_onetwothreed(int argc, char* argv[]) {
 			std::cout << ">" << i->first << " " << i->second << " " << std::fixed << runner.get_score() << std::endl;
 			std::cout << i->first << ": " << alignment.first << std::endl;
 			std::cout << i->second << ": " << alignment.second << std::endl;
-			if(check_arg.getValue()) {
-				float check_score = runner.get_score(alignment,  alignment_modes_arg.getValue());
-				if(check_score != runner.get_score()) {
-					std::cout << "check: false, score: " << std::fixed << check_score << std::endl;
-				} else {
-					std::cout << "check: true, score: " << std::fixed << check_score << std::endl;
-				}
-			}
 		}
 
 		if(print_matrices_arg.getValue().find("none") == std::string::npos) {
@@ -141,7 +167,8 @@ int run_gotoh(int argc, char* argv[]) {
 	for(auto i = pairs.pairs.begin(); i != pairs.pairs.end(); i++) {
 		std::string sequence1 = sequences.get_sequence(i->first);
 		std::string sequence2 = sequences.get_sequence(i->second);
-		runner.run(sequence1, sequence2);
+		runner.set_sequences(sequence1, sequence2);
+		runner.run();
 
 		std::cout.precision(3);
 		if(print_alignment_arg.getValue() == false) {
@@ -171,8 +198,8 @@ int run_gotoh(int argc, char* argv[]) {
 }
 
 int main(int argc, char* argv[]) {
-#if ONETWOTHREED
-	return run_onetwothreed(argc; argv);
+#ifdef ONETWOTHREED
+	return run_onetwothreed(argc, argv);
 #else
 	return run_gotoh(argc, argv);
 #endif

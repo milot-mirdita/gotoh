@@ -33,8 +33,9 @@ config_123d::~config_123d(void) {
 }
 
 
-config_123d::config_123d(std::string file)
+config_123d::config_123d(std::string file, float scale_factor)
 {
+	this->scale_factor = scale_factor;
 
 	current_row_index = 0;
 	
@@ -43,11 +44,11 @@ config_123d::config_123d(std::string file)
 	std::string line;
 	rows = 6;
 	cols = 3;
-	scores = new float*[rows];
+	scores = new int*[rows];
 	for(int i = 0; i < rows; i++) {
-		scores[i] = new float[cols];
+		scores[i] = new int[cols];
 		for(int j = 0; j < cols; j++) {
-			scores[i][j] = 0.0f;
+			scores[i][j] = 0;
 		}
 	}	
 	
@@ -60,16 +61,16 @@ config_123d::config_123d(std::string file)
 				continue;
 			}
 			
-			float loop;
-			float helix;
-			float sheet;
+			double loop;
+			double helix;
+			double sheet;
 			
 			std::stringstream into;
 			into << line;
 			into >> loop >> helix >> sheet;
-			scores[row][LOOP]=loop;
-			scores[row][HELIX]=helix;
-			scores[row][SHEET]=sheet;
+			scores[row][LOOP]=(int) (loop * scale_factor);
+			scores[row][HELIX]=(int) (helix * scale_factor);
+			scores[row][SHEET]=(int) (sheet * scale_factor);
 			row++;
 			//std::cout << loop <<"  "<< helix <<"  "<< sheet <<"  ";			
 		}

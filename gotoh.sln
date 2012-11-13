@@ -5,12 +5,18 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gotoh", "gotoh.vcxproj", "{
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug 123D|Win32 = Debug 123D|Win32
 		Debug|Win32 = Debug|Win32
+		Release 123D|Win32 = Release 123D|Win32
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C91AFEAD-2F40-4E57-A6F1-58B7E3823DE0}.Debug 123D|Win32.ActiveCfg = Debug 123D|Win32
+		{C91AFEAD-2F40-4E57-A6F1-58B7E3823DE0}.Debug 123D|Win32.Build.0 = Debug 123D|Win32
 		{C91AFEAD-2F40-4E57-A6F1-58B7E3823DE0}.Debug|Win32.ActiveCfg = Debug|Win32
 		{C91AFEAD-2F40-4E57-A6F1-58B7E3823DE0}.Debug|Win32.Build.0 = Debug|Win32
+		{C91AFEAD-2F40-4E57-A6F1-58B7E3823DE0}.Release 123D|Win32.ActiveCfg = Release 123D|Win32
+		{C91AFEAD-2F40-4E57-A6F1-58B7E3823DE0}.Release 123D|Win32.Build.0 = Release 123D|Win32
 		{C91AFEAD-2F40-4E57-A6F1-58B7E3823DE0}.Release|Win32.ActiveCfg = Release|Win32
 		{C91AFEAD-2F40-4E57-A6F1-58B7E3823DE0}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection

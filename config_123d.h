@@ -11,14 +11,16 @@
 class config_123d
 {
 public:
-	config_123d(std::string file);
+	config_123d(std::string file, float scale_factor);
 	~config_123d(void);
-	float** scores;
+	int** scores;
 	int rows;
 	int cols;
 	static const int LOOP=2;
 	static const int HELIX=0;
 	static const int SHEET=1;
+
+	float scale_factor;
 private:
 	int current_row_index;
 };
