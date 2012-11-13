@@ -2,7 +2,7 @@ PROGRAM = gotoh
 C_FILES := $(wildcard *.cpp)
 OBJS := $(patsubst %.cpp, %.o, $(C_FILES))
 CC = g++
-CFLAGS = -Wall -pedantic -Ilib -std=c++0x -m64 -O3 -Ofast -march=native -mtune=native
+CFLAGS = -Wall -pedantic -Ilib -std=c++0x -m64 -O3 -Ofast -march=native -mtune=native -DONETWOTHREED
 LDFLAGS =
 
 all: $(PROGRAM)
