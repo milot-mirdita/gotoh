@@ -144,7 +144,7 @@
       <MultiProcessorCompilation>
       </MultiProcessorCompilation>
       <SDLCheck>true</SDLCheck>
-      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

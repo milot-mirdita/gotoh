@@ -1,8 +1,8 @@
 PROGRAM = gotoh
 C_FILES := $(wildcard *.cpp)
 OBJS := $(patsubst %.cpp, %.o, $(C_FILES))
-CC = g++
-CFLAGS = -Wall -pedantic -Ilib -std=c++0x -m64 -O3 -Ofast -march=native -mtune=native -DONETWOTHREED
+CC = g++-4.6
+CFLAGS = -Wall -pedantic -Ilib -std=c++0x -Ofast -march=native -mtune=native -DONETWOTHREED -ggdb -ftree-vectorize -fno-strict-aliasing
 LDFLAGS =
 
 all: $(PROGRAM)

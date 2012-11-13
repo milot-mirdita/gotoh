@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <string>
 
 struct sscc_entries {
 	//unsigned char* residue;
