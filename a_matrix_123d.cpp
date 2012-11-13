@@ -1,5 +1,6 @@
 #include "a_matrix_123d.h"
-
+#include <algorithm>
+#include <string>
 
 int a_matrix_123d::get_initial_score(int row, int col) {
 	return 0;
@@ -144,7 +145,7 @@ void a_matrix_123d::set_sscc( sscc_entries* sscc )
 	unsigned char ss = entries->secondary_structure[0];
 	int current_gap_extend = 0;
 	int current_gap_open = gap_open * config->scores[1][ss];
-	for(unsigned int i = 1; i < rows; i++) {
+	for(int i = 1; i < rows; i++) {
 		ss = entries->secondary_structure[i - 1];
 		current_gap_extend += gap_extend * config->scores[2][ss];
 		cells[i * max_size] = current_gap_open + current_gap_extend;
@@ -152,7 +153,7 @@ void a_matrix_123d::set_sscc( sscc_entries* sscc )
 		d_matrix->cells[i * max_size] = min_score;
 	}
 
-	for(unsigned int i = 1; i < cols; i++) {
+	for(int i = 1; i < cols; i++) {
 		cells[i] = gap_open * config->scores[1][2] + gap_extend * config->scores[2][2] * i;
 		d_matrix->cells[i] = gap_open * config->scores[1][2] + gap_extend * config->scores[2][2] * i;
 		i_matrix->cells[i] = min_score;

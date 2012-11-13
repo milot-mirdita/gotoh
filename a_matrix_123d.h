@@ -4,6 +4,7 @@
 #include "secondary_structure_contacts.h"
 #include "contact_preferences.h"
 #include "secondary_structure_preference.h"
+#include <climits>
 
 class a_matrix_123d :
 	public a_matrix
