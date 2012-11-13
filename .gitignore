@@ -17,5 +17,6 @@ ipch/
 *ReSharper*
 
 Debug/
-
+Debug 123D/
 Release/
+Release 123D/
