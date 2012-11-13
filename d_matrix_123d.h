@@ -2,6 +2,7 @@
 #include "d_matrix.h"
 #include "secondary_structure_contacts.h"
 #include "config_123d.h"
+#include <climits>
 
 class d_matrix_123d : public d_matrix
 {

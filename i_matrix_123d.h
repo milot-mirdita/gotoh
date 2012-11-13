@@ -2,6 +2,7 @@
 #include "i_matrix.h"
 #include "secondary_structure_contacts.h"
 #include "config_123d.h"
+#include <climits>
 
 class i_matrix_123d : public i_matrix
 {
